@@ -10,7 +10,6 @@ api_file2_path = os.path.join(project_module_path, "common/src/main/java/alluxio
 api_file3_path = os.path.join(project_module_path, "common/src/main/java/alluxio/conf/path/SpecificPathConfiguration.java")
 api_pom_file_path = os.path.join(project_module_path, "pom.xml")
 test_copied_path = os.path.join(project_module_path, "common/src/test/java/alluxio")
-ctest_configuration_file_path = os.path.join(project_module_path, "alluxio-ctest.properties")
 time_file_path = os.path.join(cur_path, "time.txt")
 test_class_num_file_path = os.path.join(cur_path, "test_class_num.txt")
 mvn_cmd = "mvn urts:urts -Dcheckstyle.skip -Dlicense.skip -Dfindbugs.skip -Dmaven.javadoc.skip=true -DfailIfNoTests=false | tee out.txt"
@@ -58,9 +57,10 @@ def modify_api():
                 f.write(line)
                 f.write("import org.urts.configAware.ConfigListener; // UNIFY_TEST\n")  
                 f.write("import alluxio.util.ConfigurationUtils; // UNIFY_TEST\n")
+                f.write("import java.lang.management.ManagementFactory; // UNIFY_TEST\n")
             elif "public class AlluxioProperties {" in line:
                 f.write(line)
-                f.write("  public static String CTEST_FILEPATH = System.getProperty(\"user.dir\").split(\"/alluxio/core/\")[0] + \"/alluxio/core/alluxio-ctest.properties\"; // UNIFY_TESTS\n")
+                f.write("  public static String CTEST_FILEPATH = System.getProperty(\"user.dir\").split(\"/alluxio/core/\")[0] + \"/alluxio/core/alluxio-ctest-\" + ManagementFactory.getRuntimeMXBean().getName().split(\"@\")[0] + \".properties\"; // UNIFY_TESTS\n")
             elif "public AlluxioProperties()" in line:
                 f.write("  public AlluxioProperties() {\n")
                 f.write("    Properties ctestProps = ConfigurationUtils.loadPropertiesFromFile(CTEST_FILEPATH); // UNIFY_TESTS\n")
@@ -186,15 +186,15 @@ def modify_pom():
 # Run tests
 def run_urts(config_file, curConfig, curCommit):
     os.chdir(project_module_path)
-    shutil.copy(config_file, ctest_configuration_file_path)
+    shutil.copy(config_file, "curConfigFile.properties")
     print("=================[uRTS: RUN TestGetConfigValueForConfigAware]=================", flush=True)
     start1 = time.time()
-    os.system("mvn test -Dtest=TestGetConfigValueForConfigAware -pl common/ -Dcheckstyle.skip -Dlicense.skip -Dfindbugs.skip -Dmaven.javadoc.skip=true")
+    os.system("mvn surefire:test -Dtest=TestGetConfigValueForConfigAware -pl common/ -Dcheckstyle.skip -Dlicense.skip -Dfindbugs.skip -Dmaven.javadoc.skip=true")
     end1 = time.time()
-    shutil.copy(os.path.join(cur_path, "alluxio-ctest.properties"), ctest_configuration_file_path)
     print("=================[uRTS: RUN uRTS]=================", flush=True)
     start2 = time.time()
     for component in component_list:
+        print("===============[uRTS: Evaluation: In Component: " + component + " ]===============", flush=True)
         component_path = os.path.join(project_module_path, component)   
         os.chdir(component_path)
         os.system(mvn_cmd)
@@ -250,11 +250,6 @@ def copy_ctest_mapping():
     shutil.copy(source_path, target_path)
 
 
-# Prepare injection file
-def create_empty_config_file_for_running_ctest():
-    source_path = os.path.join(cur_path, "alluxio-ctest.properties")
-    shutil.copy(source_path, ctest_configuration_file_path)
-
 # Do not skip Tests in Alluxio
 def notSkipTestsInAlluxio():
     pom_file_path = os.path.join(project_root_path, "pom.xml")
@@ -278,7 +273,6 @@ def do_preparation(commit):
     notSkipTestsInAlluxio()
     modify_api()
     copy_ctest_mapping()
-    create_empty_config_file_for_running_ctest()
     copy_get_config_value_test()
     maven_install_module()
 
@@ -286,7 +280,7 @@ def do_preparation(commit):
 def copy_dependency_folder(curCommit, cur_config_name, i):
     if not os.path.exists(os.path.join(cur_path, "dependency_folder")):
         os.makedirs(os.path.join(cur_path, "dependency_folder"))
-    for folder_name in component_folder_list:
+    for folder_name in component_list:
         source_path = os.path.join(project_module_path, folder_name, ".urts-" + cur_config_name + "-Round" + str(i+1))
         target_path = os.path.join(cur_path, "dependency_folder", folder_name, cur_config_name + "-" + curCommit)
         if not os.path.exists(source_path):

@@ -25,7 +25,7 @@ public class TestGetConfigValueForConfigAware {
     @BeforeClass
     public static void before() {
         String pid = ManagementFactory.getRuntimeMXBean().getName().split("@")[0];
-        File src = new File("../curConfigFile..properties");
+        File src = new File("../curConfigFile.properties");
         File dest = new File("../alluxio-ctest-" + pid + ".properties");
         try {
             Files.copy(src.toPath(), dest.toPath());

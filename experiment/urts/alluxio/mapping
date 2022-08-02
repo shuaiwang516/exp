@@ -13,3 +13,4 @@ alluxio.master.file.PermissionCheckTest: alluxio.security.authorization.permissi
 alluxio.master.file.meta.InodeTreeTest: alluxio.home, alluxio.master.journal.folder, alluxio.master.mount.table.root.ufs, alluxio.worker.tieredstore.level0.dirs.path, alluxio.worker.tieredstore.level1.dirs.path, alluxio.underfs.s3.endpoint
 alluxio.master.file.meta.MutableInodeDirectoryTest: alluxio.security.authorization.permission.umask, alluxio.security.group.mapping.class
 alluxio.master.file.meta.MutableInodeFileTest: alluxio.security.authorization.permission.umask, alluxio.security.group.mapping.class
+alluxio.client.file.FileSystemFactoryTest: alluxio.worker.ramdisk.size
