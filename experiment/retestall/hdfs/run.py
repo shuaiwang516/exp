@@ -15,7 +15,7 @@ ctest_configuration_file_path = os.path.join(project_module_path, "src/main/reso
 production_configuration_file_path = os.path.join(project_module_path, "production-configuration.xml")
 commits = ["1576f81dfe0156514ec06b6051e5df7928a294e2", "b8ab19373d1a291b5faa9944e545b6d5c812a6eb"]
 configuration_list = ["core-default.xml", "prod1.xml", "prod2.xml"]
-mvn_cmd = "mvn urts:retestall |& tee out.txt"
+mvn_cmd = "mvn urts:retestall | tee out.txt"
 
 
 # Clone testing project
