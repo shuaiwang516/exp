@@ -4,15 +4,44 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hdfs.HdfsConfiguration;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.BeforeClass;
+import org.junit.AfterClass;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import java.lang.management.ManagementFactory;
+import java.nio.file.Files;
 import java.io.*;
 import java.util.*;
 
 public class TestGetConfigValueForConfigAware {
+
+
+    @BeforeClass
+    public static void before() {
+        String pid = ManagementFactory.getRuntimeMXBean().getName().split("@")[0];
+        File src = new File("curConfigFile.xml");
+        File dest = new File("target/classes/hdfs-ctest-" + pid + ".xml");
+        try {
+            Files.copy(src.toPath(), dest.toPath());
+        } catch (Exception e) {
+            e.printStackTrace();
+        } 
+    }
+
+
+    @AfterClass
+    public static void after() {
+        String pid = ManagementFactory.getRuntimeMXBean().getName().split("@")[0];
+        File src = new File("target/classes/hdfs-ctest-" + pid + ".xml");
+        if (src.exists()) {
+            src.delete();
+        }
+    }
+
+
     @Test
     public void testAllConfig(){
         Map<String, String> config = new HashMap<String, String>();
