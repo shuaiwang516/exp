@@ -1,4 +1,4 @@
-<include>
+<includes>
 <include>org.apache.hadoop.hbase.constraint.TestConstraints</include>
 <include>org.apache.hadoop.hbase.codec.TestCellMessageCodec</include>
 <include>org.apache.hadoop.hbase.executor.TestExecutorService</include>
@@ -295,4 +295,4 @@
 <include>org.apache.hadoop.hbase.ipc.TestCallRunner</include>
 <include>org.apache.hadoop.hbase.ipc.TestRpcServerTraceLogging</include>
 <include>org.apache.hadoop.hbase.TestNodeHealthCheckChore</include>
-</include>
+</includes>

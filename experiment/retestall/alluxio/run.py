@@ -14,7 +14,7 @@ ctest_configuration_file_path = os.path.join(project_module_path, "alluxio-ctest
 production_configuration_file_path = os.path.join(project_module_path, "production-configuration.properties")
 commits = ["6f2b2fa59fa5331942048f8e5e8a3a3a831f80b9", "bf10f79cbd99afc99f2d890ceeabb1ad939c389"]
 configuration_list = ["core-default.properties", "prod1.properties", "prod2.properties"]
-mvn_cmd = "mvn urts:retestall -Dcheckstyle.skip -Dlicense.skip -Dfindbugs.skip -Dmaven.javadoc.skip=true -DfailIfNoTests=false |& tee out.txt"
+mvn_cmd = "mvn urts:retestall -Dcheckstyle.skip -Dlicense.skip -Dfindbugs.skip -Dmaven.javadoc.skip=true -DfailIfNoTests=false | tee out.txt"
 component_folder_list = ["client/fs/", "client/hdfs/", "common/", "server/common/", "server/proxy/", "server/worker/", "transport/"]
 
 
