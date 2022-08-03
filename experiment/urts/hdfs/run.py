@@ -194,7 +194,7 @@ def run_urts(config_file, curConfig, curCommit):
     shutil.copy(config_file, "curConfigFile.xml")
     print("=================[uRTS: RUN TestGetConfigValueForConfigAware]=================", flush=True)
     start1 = time.time()
-    os.system("mvn test -Dtest=TestGetConfigValueForConfigAware")
+    os.system("mvn surefire:test -Dtest=TestGetConfigValueForConfigAware")
     end1 = time.time()
     print("=================[uRTS: RUN uRTS]=================", flush=True)
     start2 = time.time()
