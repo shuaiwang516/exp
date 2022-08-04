@@ -10,7 +10,6 @@ api_file2_path = os.path.join(project_module_path, "src/main/java/org/apache/zoo
 api_file3_path = os.path.join(project_module_path, "src/main/java/org/apache/zookeeper/server/quorum/QuorumPeerMain.java")
 api_pom_file_path = os.path.join(project_module_path, "pom.xml")
 test_copied_path = os.path.join(project_module_path, "src/test/java/org/apache/zookeeper")
-ctest_configuration_file_path = os.path.join(project_module_path, "ctest.cfg")
 time_file_path = os.path.join(cur_path, "time.txt")
 test_class_num_file_path = os.path.join(cur_path, "test_class_num.txt")
 mvn_cmd = "mvn urts:urts -DfailIfNoTests=false | tee out.txt"

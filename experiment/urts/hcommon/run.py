@@ -8,7 +8,6 @@ module_pom_file_path = os.path.join(project_module_path, "pom.xml")
 api_file_path = os.path.join(project_module_path, "src/main/java/org/apache/hadoop/conf/Configuration.java")
 api_pom_file_path = os.path.join(project_module_path, "pom.xml")
 test_copied_path = os.path.join(project_module_path, "src/test/java/org/apache/hadoop")
-ctest_configuration_file_path = os.path.join(project_module_path, "src/main/resources/core-ctest.xml")
 time_file_path = os.path.join(cur_path, "time.txt")
 test_class_num_file_path = os.path.join(cur_path, "test_class_num.txt")
 mvn_cmd = "mvn urts:urts -DfailIfNoTests=false | tee out.txt"

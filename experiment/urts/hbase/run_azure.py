@@ -11,7 +11,6 @@ hadoop_api_file_path = os.path.join(hadoop_root_path, "hadoop-common-project/had
 hadoop_api_pom_file_path = os.path.join(hadoop_root_path, "hadoop-common-project/hadoop-common/pom.xml")
 hbase_api_file_path = os.path.join(hbase_root_path, "hbase-common/src/main/java/org/apache/hadoop/hbase/HBaseConfiguration.java")
 test_copied_path = os.path.join(project_module_path, "src/test/java/org/apache/hadoop/hbase")
-ctest_configuration_file_path = os.path.join(project_module_path, "src/test/resources/hbase-ctest.xml")
 #time_file_path = os.path.join(cur_path, "time.txt")
 #test_class_num_file_path = os.path.join(cur_path, "test_class_num.txt")
 regular_test_list = os.path.join(cur_path, "regTestList")

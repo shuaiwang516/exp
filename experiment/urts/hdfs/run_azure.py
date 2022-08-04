@@ -9,7 +9,6 @@ api_file_path = os.path.join(project_root_path, "hadoop-common-project/hadoop-co
 api_pom_file_path = os.path.join(project_root_path, "hadoop-common-project/hadoop-common/pom.xml")
 hdfs_api_file_path = os.path.join(project_root_path, "hadoop-hdfs-project/hadoop-hdfs-client/src/main/java/org/apache/hadoop/hdfs/HdfsConfiguration.java")
 test_copied_path = os.path.join(project_module_path, "src/test/java/org/apache/hadoop")
-ctest_configuration_file_path = os.path.join(project_module_path, "src/main/resources/hdfs-ctest.xml")
 #time_file_path = os.path.join(cur_path, "time.txt")
 #test_class_num_file_path = os.path.join(cur_path, "test_class_num.txt")
 mvn_cmd = "mvn urts:urts -DgetterClass=TestGetConfigValueForConfigAware -DfailIfNoTests=false | tee out.txt"
@@ -191,8 +190,7 @@ def modify_pom():
 # Run tests
 def run_urts(config_file, curConfig, curCommit):
     os.chdir(project_module_path)
-    shutil.copy(config_file, ctest_configuration_file_path)
-    shutil.copy(os.path.join(cur_path, "hdfs-ctest.xml"), ctest_configuration_file_path)
+    shutil.copy(config_file, "curConfigFile.xml")
     print(DEBUG_PREFIX + "RUN uRTS]=================", flush=True)
     start = time.time()
     os.system(mvn_cmd)
@@ -242,19 +240,12 @@ def copy_ctest_mapping():
     shutil.copy(source_path, target_path)
 
 
-# Prepare injection file
-def create_empty_config_file_for_running_ctest():
-    source_path = os.path.join(cur_path, "hdfs-ctest.xml")
-    shutil.copy(source_path, ctest_configuration_file_path)
-
-
 # Prepare environment and all files
 def do_preparation(commit):
     checkout_commit(commit)
     modify_pom()
     modify_api()
     copy_ctest_mapping()
-    create_empty_config_file_for_running_ctest()
     copy_get_config_value_test()
     maven_install_module()
 

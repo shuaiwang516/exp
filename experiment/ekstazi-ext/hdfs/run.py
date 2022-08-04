@@ -156,6 +156,12 @@ def modify_config_api_to_add_ctest_file():
         raise ValueError("Can't insert into HDFSConfiguration.java ")
 
 
+# Prepare injection file
+def create_empty_config_file_for_running_ctest():
+    source_path = os.path.join(cur_path, "ctest.cfg")
+    shutil.copy(source_path, ctest_configuration_file_path)
+
+
 # Prepare mapping
 def copy_config_mapping():
     source_path = os.path.join(cur_path, "mapping")
@@ -181,6 +187,7 @@ def mimic_config_file_change(curCommit, cur_config_name):
 def do_preparation(curCommit, cur_config_name):
     checkout_commit(curCommit)
     modify_config_api_to_add_ctest_file()
+    create_empty_config_file_for_running_ctest()
     copy_config_mapping()
     prepare_ekstazi_config_file()
     add_ekstazi_runner_pom()
