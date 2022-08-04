@@ -158,7 +158,7 @@ def modify_config_api_to_add_ctest_file():
 
 # Prepare injection file
 def create_empty_config_file_for_running_ctest():
-    source_path = os.path.join(cur_path, "ctest.cfg")
+    source_path = os.path.join(cur_path, "hdfs-ctest.xml")
     shutil.copy(source_path, ctest_configuration_file_path)
 
 
