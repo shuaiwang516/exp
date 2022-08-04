@@ -1,4 +1,7 @@
 import os, shutil, time, sys
+sys.path.append("../../")
+from util import *
+
 cur_path = os.getcwd()
 project_url = "https://github.com/apache/hadoop.git"
 project_root_path = os.path.join(cur_path, "hadoop")
@@ -9,7 +12,7 @@ api_file_path = os.path.join(project_root_path, "hadoop-common-project/hadoop-co
 api_pom_file_path = os.path.join(project_root_path, "hadoop-common-project/hadoop-common/pom.xml")
 hdfs_api_file_path = os.path.join(project_root_path, "hadoop-hdfs-project/hadoop-hdfs-client/src/main/java/org/apache/hadoop/hdfs/HdfsConfiguration.java")
 test_copied_path = os.path.join(project_module_path, "src/test/java/org/apache/hadoop")
-#time_file_path = os.path.join(cur_path, "time.txt")
+time_number_file_path = os.path.join(cur_path, "time_number.txt")
 #test_class_num_file_path = os.path.join(cur_path, "test_class_num.txt")
 mvn_cmd = "mvn urts:urts -DgetterClass=TestGetConfigValueForConfigAware -DfailIfNoTests=false | tee out.txt"
 #commits = ["1576f81dfe0156514ec06b6051e5df7928a294e2", "c665ab02ed5c400b0c5e9e350686cd0e5b5e6972", "028ec4704b9323954c091bcda3433f7b79cb61de", "832a3c6a8918c73fa85518d5223df65b48f706e9", "3fdeb7435add3593a0a367fff6e8622a73ad9fa3", "98a74e23514392dc8859f407cd40d9c96d8c5923", "1abd03d68f4f236674ce929164cc460037730abb", "8ce30f51f999c0a80db53a2a96b5be5505d4d151", "bce14e746b3d00e692820f28b72ffe306f74d0b2", "b8ab19373d1a291b5faa9944e545b6d5c812a6eb", "b38b00e52839911ab4e0b97fd269c53bf7d1380f", "59fc4061cb619c85538277588f326469dfa08fb8", "4a26a61ecd54bd36b6d089f999359da5fca16723", "f4b24c68e76df40d55258fc5391baabfa9ac362d", "c748fce17ace8b45ee0f3c3967d87893765eea61", "a2a0283c7be8eac641a256f06731cb6e4bab3b09", "762a83e044b84250c6e2543e02f48136361ea3eb", "a1a318417105f155ed5c9d34355309775eb43d11", "eefa664fea1119a9c6e3ae2d2ad3069019fbd4ef", "4ef27a596fd1d7be5e437ab444b12fe450e79e79"]
@@ -23,21 +26,6 @@ def clone():
         shutil.rmtree(project_root_path)
     clone_cmd = "git clone " + project_url
     os.system(clone_cmd)
-
-
-# Record the experiment time
-def record_time(elapsed_time, curConfig, curCommit):
-    print("{}TOTAL_TIME: {}-{} : {}s\n".format(DEBUG_PREFIX, curConfig, curCommit, elapsed_time), flush=True)
-    # with open(time_file_path, 'a') as f:
-    #     f.write("{}-{} : {}s\n".format(curConfig, curCommit, elapsed_time))
-
-
-# def record_test_class_number(curConfig, curCommit):
-#     os.chdir(project_module_path)
-#     p = os.popen("grep 'Tests ' out.txt | sed -e 's/^.*Tests //' -e 's/.\[0;1;32m//' -e 's/.\[m//' -e 's/.\[1m//' -e 's/.\[0;1m//g' -e 's/.\[m//g' | sed -n 's/run: \([1-9][0-9]*\),.*- in \(.*\)/\2     \1/p' | wc -l")
-#     with open(test_class_num_file_path, 'a') as f:
-#         f.write("{}-{} : {}\n".format(curConfig, curCommit, int(p.read())))
-#     os.chdir(cur_path)
 
 
 # Modify Get/Set API
@@ -195,7 +183,7 @@ def run_urts(config_file, curConfig, curCommit):
     start = time.time()
     os.system(mvn_cmd)
     end = time.time()
-    record_time(end-start, curConfig, curCommit)
+    record_time_and_number("hdfs", "URTS", time_number_file_path, end - start, curConfig, curCommit)
     os.chdir(cur_path)
 
 
@@ -267,7 +255,7 @@ def run(argv):
             copy_production_config_file(replacedConfigFilePath, targetConfigFilePath)
             prepare_urtsrc_file(cur_config_name)
             run_urts(replacedConfigFilePath, curConfig, curCommit)
-            #record_test_class_number(curConfig, curCommit)
+            copy_dependency_folder_urts("hdfs", project_module_path, cur_path, curCommit, cur_config_name, i)
 
 
 if __name__ == '__main__':

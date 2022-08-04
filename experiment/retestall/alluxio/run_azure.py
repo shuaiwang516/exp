@@ -1,4 +1,7 @@
 import os, shutil, time, sys
+sys.path.append("../../")
+from util import *
+
 cur_path = os.getcwd()
 non_ctest_list = "nonCtestList"
 project_url = "https://github.com/Alluxio/alluxio.git"
@@ -8,7 +11,7 @@ project_module_path = os.path.join(project_path, project_module)
 api_file1_path = os.path.join(project_module_path, "common/src/main/java/alluxio/conf/AlluxioProperties.java")
 api_file2_path = os.path.join(project_module_path, "common/src/main/java/alluxio/conf/path/SpecificPathConfiguration.java")
 pom_file_path = os.path.join(project_module_path, "pom.xml")
-#time_file_path = os.path.join(cur_path, "time.txt")
+time_number_file_path = os.path.join(cur_path, "time_number.txt")
 #test_class_num_file_path = os.path.join(cur_path, "test_class_num.txt")
 ctest_configuration_file_path = os.path.join(project_module_path, "alluxio-ctest.properties")
 production_configuration_file_path = os.path.join(project_module_path, "production-configuration.properties")
@@ -27,25 +30,6 @@ def clone():
     os.system(clone_cmd)
 
 
-# Record the experiment time
-def record_time(elapsed_time, curConfig, curCommit):
-    print("{}TOTAL_TIME: {}-{} : {}s\n".format(DEBUG_PREFIX, curConfig, curCommit, elapsed_time), flush=True)
-    # with open(time_file_path, 'a') as f:
-    #     f.write("{}-{} : {}s\n".format(curConfig, curCommit, elapsed_time))
-
-
-# def record_test_class_number(curConfig, curCommit):
-#     total_num = 0
-#     for component in component_folder_list:
-#         component_path = os.path.join(project_module_path, component) 
-#         os.chdir(component_path)
-#         p = os.popen("grep 'Tests ' out.txt | sed -e 's/^.*Tests //' -e 's/.\[0;1;32m//' -e 's/.\[m//' -e 's/.\[1m//' -e 's/.\[0;1m//g' -e 's/.\[m//g' | sed -n 's/run: \([1-9][0-9]*\),.*- in \(.*\)/\2     \1/p' | wc -l")
-#         total_num += int(p.read())
-#     with open(test_class_num_file_path, 'a') as f:
-#         f.write("{}-{} : {}\n".format(curConfig, curCommit, total_num))
-#     os.chdir(cur_path)
-
-
 # Copy the production configuration to the project for configuration tests
 def copy_production_config_file(config_file_name):
     replaced_config_file_path = os.path.join(cur_path, "../../config_files/alluxio/", config_file_name)
@@ -60,7 +44,7 @@ def run_test(curConfig, curCommit):
         os.chdir(testing_component_path)
         os.system(mvn_cmd)
     end = time.time()
-    record_time(end - start, curConfig, curCommit)
+    record_time_and_number("alluxio", "REALL", time_number_file_path, end - start, curConfig, curCommit)
     os.chdir(cur_path)
 
 

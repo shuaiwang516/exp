@@ -1,4 +1,7 @@
 import os, shutil, time, sys
+sys.path.append("../../")
+from util import *
+
 cur_path = os.getcwd()
 non_ctest_list = "nonCtestList"
 project_url = "https://github.com/apache/zookeeper.git"
@@ -7,7 +10,7 @@ project_module = "zookeeper-server"
 project_module_path = os.path.join(project_path, project_module)
 api_file_path = os.path.join(project_module_path, "src/main/java/org/apache/zookeeper/server/quorum/QuorumPeerConfig.java")
 pom_file_path = os.path.join(project_module_path, "pom.xml")
-#time_file_path = os.path.join(cur_path, "time.txt")
+time_number_file_path = os.path.join(cur_path, "time_number.txt")
 #test_class_num_file_path = os.path.join(cur_path, "test_class_num.txt")
 production_configuration_file_path = os.path.join(project_module_path, "production-configuration.cfg")
 commits = ["acbfb2d78996cbaa29b9dc764d4cb3463193dc45", "9213f7353b1e6ce4d0fdbc1dca963ace1fd32cec", "ad5513b8dd15637c6c95585603a4e055dabad56d", "061438e83e61692fc9e06e057a739db5327d42b9", "7fdadf7273f34dd0552db25a3771cf55b65e9208", "ea75e1f63572fc72fb8520ba8c793523047acb49", "c583a6e79654359b5daad5093d1730e370d3b75b", "1590a424cb7a8768b0ae01f2957856b1834dd68d", "f8ebf1a25281b2c7f48e08011918c72643313209", "96d87e2809f92460f182c66311d83d59f2ab96c3", "f5c29aab9adb49d9d3580074d4d1a805579fa20d", "766e173e9d51b6354920ebc136b246d221b87ec1", "b79abb2014db9684c00afd7d98c0a7cb69ce6c8b", "c499202a2c470e2e365ef109c8e49784cb043367", "5e787c5990091b2d1fc560eba88d3c25b04690a2", "32e40e8cee36ddba1973875ab6637912719271fa", "5e6e15ac40cfd2cadac3e718e494a3c13b934b8d", "525a28bd1cb864a5783593c64908cfe0ddcba65f", "2f00dea17bd94bf43b2f6647f6b08b00ff8b7ece", "9442ce23bade5286459ff78ade1af173f7b69c30", "16187c48a1d9b339866b81e69c522021b031c4c3", "2d3065606a444c0b711c1809ce296db2ba56cb0c", "70f70d821c2c5225edeb54a8af0bd1911a51fc89", "e642a325b91ab829aefa47708c7b4b45811d2d23", "a692cbab92e9bae53c9313241d9668d9de97ed8b", "e7de1cf04925b7e1d06f9add83d90760e5a7a241", "7a368b4b196af02190e6e57f18f56598ee32a626", "9a5da5f9a023e53bf339748b5b7b17278ae36475", "3cdc62c132846a6e5fd06782730a986b3e5ea144", "5f6ec6cc7fd303702dca31edd2317b33c6e66bd1", "06467dc8c20e6c7357c19904f6214bb406262ba2", "726ec30fdd47bccd2a2be021cf6a6b848e9ee28b", "d9d20aa1db311424336a564ae55367b4e20c4c9d", "ce4c3d52e0dfb59ee758b77450ae13b196488c95", "26001aacfeff519ccd6b0991b0cc38ab10ad6564", "c0b19e0c5c2bbf1fb24e154466b6cc0fa6b5e74a", "531bddd5b43d2f0b3afbe0051642830c47030652", "156e682e3d4bb27338418602c1c3c530da6ff7bd", "cb899167421d7a24f1e6c3f06aa4a621391df15f", "864b8a7c8044349b29b0e67952323a8cb2bc2dd4", "01f935cdebd582211e6d4eef9f81da4228412911", "8d82be71dfce6b6752717ca0a68a77ec3c03032b", "3b0603f526fda4715904bfe2d1bba8a79458f00c", "be3c3954e6bd940baf4b8d21b4b6a87a71f76ee6", "1104deeaa589b01548bfa6c411e090e345f132f8", "7b75017bbb70c9f159b35f7399e29dc53bdc3d97", "957f8fc0afbeca638f13f6fb739e49a921da2b9d", "85551f9be5b054fa4aee0636597b12bda2ecb2e8", "d45d5df963cc3f7641d6dec2920bb22cfe8d0a76", "5a02a05eddb59aee6ac762f7ea82e92a68eb9c0f"]
@@ -28,21 +31,6 @@ def clone():
     os.system(clone_cmd)
 
 
-# Record the experiment time
-def record_time(elapsed_time, curConfig, curCommit):
-    print("{}TOTAL_TIME: {}-{} : {}s\n".format(DEBUG_PREFIX, curConfig, curCommit, elapsed_time), flush=True)
-#     with open(time_file_path, 'a') as f:
-#         f.write("{}-{} : {}s\n".format(curConfig, curCommit, elapsed_time))
-
-
-# def record_test_class_number(curConfig, curCommit):
-#     os.chdir(project_module_path)
-#     p = os.popen("grep 'Tests ' out.txt | sed -e 's/^.*Tests //' -e 's/.\[0;1;32m//' -e 's/.\[m//' -e 's/.\[1m//' -e 's/.\[0;1m//g' -e 's/.\[m//g' | sed -n 's/run: \([1-9][0-9]*\),.*- in \(.*\)/\2     \1/p' | wc -l")
-#     with open(test_class_num_file_path, 'a') as f:
-#         f.write("{}-{} : {}\n".format(curConfig, curCommit, int(p.read())))
-#     os.chdir(cur_path)
-
-
 # Copy the production configuration to the project for configuration tests
 def copy_production_config_file(config_file_name):
     replaced_config_file_path = os.path.join(cur_path, "../../config_files/zookeeper/", config_file_name)
@@ -55,7 +43,7 @@ def run_test(curConfig, curCommit):
     start = time.time()
     os.system(mvn_cmd)
     end = time.time()
-    record_time(end - start, curConfig, curCommit)
+    record_time_and_number("zookeeper", "UNSAFE", time_number_file_path, end - start, curConfig, curCommit)
     os.chdir(cur_path)
 
 
@@ -234,16 +222,6 @@ def do_preparation(curCommit, cur_config_name):
     prepare_ekstazi_config_file()
     add_ekstazi_runner_pom()
     maven_install()
-
-
-def copy_dependency_folder(curCommit, cur_config_name):
-    if not os.path.exists(os.path.join(cur_path, "dependency_folder")):
-        os.makedirs(os.path.join(cur_path, "dependency_folder"))
-    source_path = os.path.join(project_module_path, ".ekstazi")
-    target_path = os.path.join(cur_path, "dependency_folder", cur_config_name + "-" + curCommit)
-    if os.path.exists(target_path):
-        shutil.rmtree(target_path)
-    shutil.copytree(source_path, target_path)
     
 
 def clean_dependency_folder():
@@ -266,8 +244,7 @@ def run(argv):
             copy_production_config_file(config_file_name)
             print(DEBUG_PREFIX + curCommit + " Config: " + cur_config_name + " ===============", flush=True)
             run_test(curConfig, curCommit)
-            # record_test_class_number(curConfig, curCommit)
-            # copy_dependency_folder(curCommit, cur_config_name)
+            copy_dependency_folder_ekstazi("zookeeper", "UNSAFE", project_module_path, cur_path, curCommit, cur_config_name, i)
         clean_dependency_folder()
 
 

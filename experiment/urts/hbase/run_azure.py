@@ -1,4 +1,7 @@
 import os, shutil, time, sys
+sys.path.append("../../")
+from util import *
+
 cur_path = os.getcwd()
 hadoop_url = "https://github.com/apache/hadoop.git"
 hbase_url = "https://github.com/apache/hbase.git"
@@ -11,7 +14,7 @@ hadoop_api_file_path = os.path.join(hadoop_root_path, "hadoop-common-project/had
 hadoop_api_pom_file_path = os.path.join(hadoop_root_path, "hadoop-common-project/hadoop-common/pom.xml")
 hbase_api_file_path = os.path.join(hbase_root_path, "hbase-common/src/main/java/org/apache/hadoop/hbase/HBaseConfiguration.java")
 test_copied_path = os.path.join(project_module_path, "src/test/java/org/apache/hadoop/hbase")
-#time_file_path = os.path.join(cur_path, "time.txt")
+time_number_file_path = os.path.join(cur_path, "time_number.txt")
 #test_class_num_file_path = os.path.join(cur_path, "test_class_num.txt")
 regular_test_list = os.path.join(cur_path, "regTestList")
 mvn_cmd = "mvn urts:urts -DgetterClass=TestGetConfigValueForConfigAware -DfailIfNoTests=false | tee out.txt"
@@ -30,21 +33,6 @@ def clone():
     os.system(hadoop_clone_cmd)
     hbase_clone_cmd = "git clone " + hbase_url
     os.system(hbase_clone_cmd)
-
-
-# Record the experiment time
-def record_time(elapsed_time, curConfig, curCommit):
-    print("{}TOTAL_TIME: {}-{} : {}s\n".format(DEBUG_PREFIX, curConfig, curCommit, elapsed_time), flush=True)
-    # with open(time_file_path, 'a') as f:
-    #     f.write("{}-{} : {}s\n".format(curConfig, curCommit, elapsed_time))
-
-
-# def record_test_class_number(curConfig, curCommit):
-#     os.chdir(project_module_path)
-#     p = os.popen("grep 'Tests ' out.txt | sed -e 's/^.*Tests //' -e 's/.\[0;1;32m//' -e 's/.\[m//' -e 's/.\[1m//' -e 's/.\[0;1m//g' -e 's/.\[m//g' | sed -n 's/run: \([1-9][0-9]*\),.*- in \(.*\)/\2     \1/p' | wc -l")
-#     with open(test_class_num_file_path, 'a') as f:
-#         f.write("{}-{} : {}\n".format(curConfig, curCommit, int(p.read())))
-#     os.chdir(cur_path)
 
 
 # Add uRTS to pom file
@@ -92,7 +80,7 @@ def run_urts(config_file, curConfig, curCommit):
     start = time.time()
     os.system(mvn_cmd)
     end = time.time()
-    record_time(end-start, curConfig, curCommit)
+    record_time_and_number("hbase", "URTS", time_number_file_path, end - start, curConfig, curCommit)
     os.chdir(cur_path)
 
 
@@ -303,14 +291,6 @@ def do_preparation(commit):
     maven_install_module()
 
 
-def copy_dependency_folder(curCommit, cur_config_name, i):
-    source_path = os.path.join(project_module_path, ".urts-" + cur_config_name + "-Round" + str(i+1))
-    target_path = os.path.join(cur_path, "dependency_folder", cur_config_name + "-" + curCommit)
-    if os.path.exists(target_path):
-        shutil.rmtree(target_path)
-    shutil.copytree(source_path, target_path)
-
-
 def copy_cofig_value(curCommit, cur_config_name):
     source_path = os.path.join(project_module_path, ".ConfigValue")
     target_path = os.path.join(cur_path, "config_value", "ConfigValue-" + cur_config_name + "-" + curCommit)
@@ -335,9 +315,7 @@ def run(argv):
             copy_production_config_file(replacedConfigFilePath, targetConfigFilePath)
             prepare_urtsrc_file(cur_config_name)
             run_urts(replacedConfigFilePath, curConfig, curCommit)
-            #record_test_class_number(curConfig, curCommit)
-            #copy_dependency_folder(curCommit, cur_config_name, i)
-            #copy_cofig_value(curCommit, cur_config_name)
+            copy_dependency_folder_urts("hbase", project_module_path, cur_path, curCommit, cur_config_name, i)
 
 if __name__ == '__main__':
     run(sys.argv)
