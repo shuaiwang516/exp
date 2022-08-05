@@ -36,3 +36,6 @@ Thumbs.db
 
 *.npy
 *.iml
+
+# python
+__pycache__/
