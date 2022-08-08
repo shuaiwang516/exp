@@ -89,7 +89,7 @@ public class StaticSelectEkstaziMojo extends AbstractEkstaziMojo {
     }
 
     public void execute() throws MojoExecutionException {
-
+        long startTime = System.currentTimeMillis();
         // Check if user explicitly requested to not use Ekstazi in
         // this run.
         if (getSkipme()) {
@@ -106,7 +106,7 @@ public class StaticSelectEkstaziMojo extends AbstractEkstaziMojo {
         runConfigValueGetterTestThroughSurefire();
         preCheckConfigAwareFiles();
 
-        long startTime = System.currentTimeMillis();
+
         Plugin surefirePlugin = lookupPlugin(SUREFIRE_PLUGIN_KEY);
         // Get all plugin executions.
         Map<String, PluginExecution> id2Execution = surefirePlugin.getExecutionsAsMap();
