@@ -137,6 +137,11 @@ public abstract class AbstractEkstaziMojo extends AbstractMojo {
     @Parameter(property = "ekstazi.parentdir", defaultValue = "${basedir}")
     protected File parentdir;
 
+    /**
+     * Prefix for evaluation.
+     */
+    protected String evalStrPrefix = "===============[uRTS Evaluation: ";
+
     public boolean getSkipTests() {
         return skipTests;
     }

@@ -89,7 +89,7 @@ public class StaticSelectEkstaziMojo extends AbstractEkstaziMojo {
     }
 
     public void execute() throws MojoExecutionException {
-        long startTime = System.currentTimeMillis();
+
         // Check if user explicitly requested to not use Ekstazi in
         // this run.
         if (getSkipme()) {
@@ -106,6 +106,7 @@ public class StaticSelectEkstaziMojo extends AbstractEkstaziMojo {
         runConfigValueGetterTestThroughSurefire();
         preCheckConfigAwareFiles();
 
+        long startTime = System.currentTimeMillis();
         Plugin surefirePlugin = lookupPlugin(SUREFIRE_PLUGIN_KEY);
         // Get all plugin executions.
         Map<String, PluginExecution> id2Execution = surefirePlugin.getExecutionsAsMap();
@@ -133,9 +134,10 @@ public class StaticSelectEkstaziMojo extends AbstractEkstaziMojo {
         long endTime = System.currentTimeMillis();
         long timeElapsed = endTime - startTime;
 
-        String [] folder = Config.getNextDirName().split("/");
-        String folderName = folder[folder.length - 1];
-        MojoLog.timerLog(folderName, timeElapsed);
+//        String [] folder = Config.getNextDirName().split("/");
+//        String folderName = folder[folder.length - 1];
+//        MojoLog.timerLog(folderName, timeElapsed);
+        getLog().info(evalStrPrefix + "ANALYSIS_TIME: " + timeElapsed);
     }
 
     // INTERNAL
@@ -154,12 +156,20 @@ public class StaticSelectEkstaziMojo extends AbstractEkstaziMojo {
             Config.prepareRound();
             nonAffectedClassesFromPrev = AffectedChecker.findNonAffectedClassesFromPrev(parentdir, getRootDirOption());
             nonAffectedClassesFromCurRound = AffectedChecker.findNonAffectedClassesFromCurRound(parentdir, getRootDirOption());
+            Set<String> curCounter = new HashSet<>();
             for (String classNameWithRound : nonAffectedClassesFromCurRound) {
                 String className = classNameWithRound.split(AffectedChecker.ROUND_SEPARATOR)[0];
+                curCounter.add(className);
                 if (!nonAffectedClassesFromPrev.contains(className)) {
                     nonAffectedClassesFromCurRoundResult.add(classNameWithRound);
                 }
             }
+
+            Set<String> bothCounter = new HashSet<>();
+            bothCounter.addAll(curCounter);
+            bothCounter.addAll(nonAffectedClassesFromPrev);
+            getLog().info(evalStrPrefix + "SKIP_NUM: SKIP_FROM_PREV : " + nonAffectedClassesFromPrev.size() +
+                    " SKIP_FROM_CUR : " + curCounter.size() + " SKIP_FROM_BOTH : " + bothCounter.size());
 
             // Do not exclude recently failing tests if appropriate
             // argument is provided.

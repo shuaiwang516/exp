@@ -49,7 +49,7 @@ public class DynamicSelectEkstaziMojo extends StaticSelectEkstaziMojo {
 //    }
 
     public void execute() throws MojoExecutionException {
-        long startTime = System.currentTimeMillis();
+
         if (getSkipme()) {
             getLog().info("Ekstazi is skipped.");
             return;
@@ -63,17 +63,19 @@ public class DynamicSelectEkstaziMojo extends StaticSelectEkstaziMojo {
         runConfigValueGetterTestThroughSurefire();
         preCheckConfigAwareFiles();
 
+        long startTime = System.currentTimeMillis();
         if (isRestoreGoalPresent()) {
             super.execute();
         } else {
             executeThis();
         }
         long endTime = System.currentTimeMillis();
-        long timeElapsed = endTime - startTime;
+        double timeElapsed = (endTime - startTime) / 1000.0;
 
-        String [] folder = Config.getNextDirName().split("/");
-        String folderName = folder[folder.length - 1];
-        MojoLog.timerLog(folderName, timeElapsed);
+//        String [] folder = Config.getNextDirName().split("/");
+//        String folderName = folder[folder.length - 1];
+//        MojoLog.timerLog(folderName, timeElapsed);
+        getLog().info(evalStrPrefix + "ANALYSIS_TIME: " + timeElapsed);
     }
 
     // INTERNAL
