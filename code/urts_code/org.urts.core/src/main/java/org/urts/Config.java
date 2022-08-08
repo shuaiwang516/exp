@@ -470,7 +470,7 @@ public final class Config {
         CONFIG_FILE_DIR_PATH_V = getString(props, CONFIG_FILE_DIR_PATH_N, CONFIG_FILE_DIR_PATH_V);
         // DEFAULT_CONFIG_FILE_PATH_V = getString(props, DEFAULT_CONFIG_FILE_PATH_N, DEFAULT_CONFIG_FILE_PATH_V);
         CTEST_MAPPING_FILE_PATH_V = getString(props, CTEST_MAPPING_FILE_PATH_N, CTEST_MAPPING_FILE_PATH_V);
-        CONFIG_INJECT_FILE_PATH_V = getString(props, CONFIG_INJECT_FILE_PATH_N, CONFIG_INJECT_FILE_PATH_V).replaceAll("-pid", "-" + ManagementFactory.getRuntimeMXBean().getName().split("@")[0]);
+        CONFIG_INJECT_FILE_PATH_V = getString(props, CONFIG_INJECT_FILE_PATH_N, CONFIG_INJECT_FILE_PATH_V).replaceAll("-pid", "-" + getPID());
         CONFIG_PROD_FILE_PATH_V = getString(props, CONFIG_PROD_FILE_PATH_N, CONFIG_PROD_FILE_PATH_V);
         CONFIG_EXCLUDES_V = getSet(props, CONFIG_EXCLUDES_N, CONFIG_EXCLUDES_V);
         CONFIG_DEPENDENCY_V = getMapList(props, CONFIG_DEPENDENCY_N, CONFIG_DEPENDENCY_V);
@@ -495,6 +495,17 @@ public final class Config {
     }
 
     // INTERNAL
+
+    /**
+     * Returns process id. Note that Java does not guarantee any format for id,
+     * so this is just a common heuristic.
+     *
+     * @return Current process id
+     */
+    private static String getPID() {
+        String vmName = ManagementFactory.getRuntimeMXBean().getName();
+        return vmName.substring(0, vmName.indexOf("@"));
+    }
 
     private static String createFileNameInCoverageDir(String name) {
         return CUR_DIR_V + System.getProperty("file.separator") + name;
@@ -578,7 +589,7 @@ public final class Config {
         CONFIG_FILE_DIR_PATH_V = getString(props, CONFIG_FILE_DIR_PATH_N, CONFIG_FILE_DIR_PATH_V);
         // DEFAULT_CONFIG_FILE_PATH_V = getString(props, DEFAULT_CONFIG_FILE_PATH_N, DEFAULT_CONFIG_FILE_PATH_V);
         CTEST_MAPPING_FILE_PATH_V = getString(props, CTEST_MAPPING_FILE_PATH_N, CTEST_MAPPING_FILE_PATH_V);
-        CONFIG_INJECT_FILE_PATH_V = getString(props, CONFIG_INJECT_FILE_PATH_N, CONFIG_INJECT_FILE_PATH_V).replaceAll("-pid", "-" + ManagementFactory.getRuntimeMXBean().getName().split("@")[0]);
+        CONFIG_INJECT_FILE_PATH_V = getString(props, CONFIG_INJECT_FILE_PATH_N, CONFIG_INJECT_FILE_PATH_V).replaceAll("-pid", "-" + getPID());
         CONFIG_PROD_FILE_PATH_V = getString(props, CONFIG_PROD_FILE_PATH_N, CONFIG_PROD_FILE_PATH_V);
         CONFIG_EXCLUDES_V = getSet(props, CONFIG_EXCLUDES_N, CONFIG_EXCLUDES_V);
         CONFIG_DEPENDENCY_V = getMapList(props, CONFIG_DEPENDENCY_N, CONFIG_DEPENDENCY_V);
