@@ -8,8 +8,6 @@ def record_time_and_number(project, mode, file_path, elapsed_time, curConfig, cu
     print("{}TOTAL_TIME: {}-{} : {}s\n".format(DEBUG_PREFIX, curConfig, curCommit, elapsed_time), flush=True)
     p = os.popen("grep 'Tests ' out.txt | sed -e 's/^.*Tests //' -e 's/.\[0;1;32m//' -e 's/.\[m//' -e 's/.\[1m//' -e 's/.\[0;1m//g' -e 's/.\[m//g' | sed -n 's/run: \([1-9][0-9]*\),.*- in \(.*\)/\2     \1/p' | wc -l")
     if mode == "URTS":
-        num = int(p.read()) - 2
-    elif mode == "EKST" or mode == "UNSAFE":
         num = int(p.read()) - 1
     else:
         num = int(p.read())
