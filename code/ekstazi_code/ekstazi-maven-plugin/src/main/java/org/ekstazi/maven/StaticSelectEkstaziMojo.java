@@ -139,10 +139,10 @@ public class StaticSelectEkstaziMojo extends AbstractEkstaziMojo {
         appendExcludesListToExcludesFile(surefirePlugin, nonAffectedClasses);
 
         long endTime = System.currentTimeMillis();
-        long timeElapsed = endTime - startTime;
+        double timeElapsed = (endTime - startTime) / 1000.0;
 
 
-        MojoLog.timerLog("Static", timeElapsed);
+        getLog().info(evalStrPrefix + "ANALYSIS_TIME: " + timeElapsed);
     }
 
     // INTERNAL
