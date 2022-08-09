@@ -7,10 +7,24 @@ DEBUG_PREFIX="===============[ Evaluation: "
 def record_time_and_number(project, mode, file_path, elapsed_time, curConfig, curCommit):
     print("{}TOTAL_TIME: {}-{} : {}s\n".format(DEBUG_PREFIX, curConfig, curCommit, elapsed_time), flush=True)
     p = os.popen("grep 'Tests ' out.txt | sed -e 's/^.*Tests //' -e 's/.\[0;1;32m//' -e 's/.\[m//' -e 's/.\[1m//' -e 's/.\[0;1m//g' -e 's/.\[m//g' | sed -n 's/run: \([1-9][0-9]*\),.*- in \(.*\)/\2     \1/p' | wc -l")
-    if mode == "URTS":
-        num = int(p.read()) - 1
-    else:
-        num = int(p.read())
+    num = int(p.read())
+    print("{}TEST_CLASS_NUM: {}-{} : {}\n".format(DEBUG_PREFIX, curConfig, curCommit, num, flush=True))
+    with open(file_path, 'a') as f:
+        f.write("{}_{}_{}_{}:{}s,{}\n".format(mode, project, curConfig, curCommit, elapsed_time, num))
+
+
+# Record the experiment time
+def record_time_and_number(project, mode, component_list, file_path, elapsed_time, curConfig, curCommit, project_module_path, cur_path):
+    print("{}TOTAL_TIME: {}-{} : {}s\n".format(DEBUG_PREFIX, curConfig, curCommit, elapsed_time), flush=True)
+    # p = os.popen("grep 'Tests ' out.txt | sed -e 's/^.*Tests //' -e 's/.\[0;1;32m//' -e 's/.\[m//' -e 's/.\[1m//' -e 's/.\[0;1m//g' -e 's/.\[m//g' | sed -n 's/run: \([1-9][0-9]*\),.*- in \(.*\)/\2     \1/p' | wc -l")
+    # num = int(p.read())
+    num = 0
+    for component in component_list:
+        component_path = os.path.join(project_module_path, component) 
+        os.chdir(component_path)
+        p = os.popen("grep 'Tests ' out.txt | sed -e 's/^.*Tests //' -e 's/.\[0;1;32m//' -e 's/.\[m//' -e 's/.\[1m//' -e 's/.\[0;1m//g' -e 's/.\[m//g' | sed -n 's/run: \([1-9][0-9]*\),.*- in \(.*\)/\2     \1/p' | wc -l")
+        num += int(p.read())
+    os.chdir(cur_path)
     print("{}TEST_CLASS_NUM: {}-{} : {}\n".format(DEBUG_PREFIX, curConfig, curCommit, num, flush=True))
     with open(file_path, 'a') as f:
         f.write("{}_{}_{}_{}:{}s,{}\n".format(mode, project, curConfig, curCommit, elapsed_time, num))

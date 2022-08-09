@@ -49,7 +49,7 @@ def run_test(curConfig, curCommit):
         os.chdir(testing_component_path)
         os.system(mvn_cmd)
     end = time.time()
-    record_time_and_number("alluxio", "EKST", time_number_file_path, end - start, curConfig, curCommit)
+    record_time_and_number("alluxio", "EKST", component_folder_list, time_number_file_path, end - start, curConfig, curCommit, project_module_path, cur_path)
     os.chdir(cur_path)
 
 

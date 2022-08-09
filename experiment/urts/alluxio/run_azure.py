@@ -18,7 +18,7 @@ time_number_file_path = os.path.join(cur_path, "time_number.txt")
 mvn_cmd = "mvn urts:urts -DgetterClass=TestGetConfigValueForConfigAware -Dcheckstyle.skip -Dlicense.skip -Dfindbugs.skip -Dmaven.javadoc.skip=true -DfailIfNoTests=false -Dmaven.test.failure.ignore=true | tee out.txt"
 #commits = ["6f2b2fa59fa5331942048f8e5e8a3a3a831f80b9", "5cf33595cb8c6e6d2738a211e12d445b5e98b663", "833b1018d957115870be746ac46d85ead765d24c", "5063016989da5284e1a94e80b7b2f2258aadaa7e", "cc6136da11aee50a03b8270fc670e190ce99269e", "24540885c8dac5053f783b3e81a64ca023e44e62", "c6ae851a13ed788641d47c1e90b88dcc27955c4f", "f2825833fbf5d473fe7265aae749e8b3d52df143", "93437fa5763fb9e3f0fccd508208bf23b30041cc", "b85788b0075101f3291bf8bb9f8c08f92869977f", "f49ed5f85ea2e9fdc60097f99421cd14362c6ccc", "cd1902383555d65ea85a561d1840137052b9ff4e", "e9136cfd354d28ca9e953b282f4c327a0362d587", "82b6cad66a7bf34e994eb37de99e96e55080a1bf", "99e76a85141cdbdd7a96d13a6cc4a58c15728277", "20a7f4edfea39bc17bfe17b067cf94d5034ac526", "221f0ed5851417ffc6cae4758d112d490e25f930", "a25b0ca49c38263d92d716e99fb4c29c6f414939", "e697da0a75d6f98f31d6cdd0c7190bf29d5da827", "fbe3e86b561c2064758e81af2f658eb8ea588835", "d3b045247ae9baecc6fe45af8d410df38335d43d", "984251fe3345659541c4b2330d2185320fa27738", "9311d6a9d4c10599d0c86dfa6973397c0078d605", "f64540541748ba088eafbbac37fbd8c0458c410e", "3b533206f57f4c5c4b82fc5e0ba30d6d3483ef6b", "fcb0b4c9d4f3b787a091a2721d0a7d807055caaa", "3dc352eaeec176f07fe4255e65555219bcc5764b", "3c0275f4b81af80f98c8e0f1043bab8c8803f07c", "9f51b06a3986ccf030f8d416e70dfd23fab344c9", "696cb89bfc8b7dd41393e3003307947d2110e21f", "758d37e8c8a7a4fdb31103cc9c421b601936cf25", "ed7588da4adabc0555a018140b82f2f8215fe506", "4c028f426f13f3ab4c493d4dd12f46fc8217576d", "2410237a6c6839f0ce9ae067f2e028d419658d4f", "9b6e34a204e85527eaf498f0e65ce529f4da740a", "564fcffa744df4d65188d4582748e0d282848c9a", "4c8b555920da6a844f3f30cc70493b563178518d", "3064609e7489ea3c2111fd6d3c85b48270dc18f8", "67908f2d1fd16b380d6a0f2af938b78588028cd4", "a16bc958dd283dc9bc7c9fe7f17627ace327eb28", "97c246d9a96f376928b806890a76aa430d8802b4", "afe74e0a5489eac0fad1e78ce5b52b1a7b2a9754", "85ac996f9f753154745ac598a655b2e484a51bce", "dc922657fdbb6c5ccbbf2e0c1d2e02c66c921204", "278b9e263842d61d7168cc29cac44666bfeea0d0", "fa54b1bcd9fc891413cbd168862706d0fad0ad02", "ea1cdc5aa97ba0e4a36ee12f22a5f981cf7d7958", "067e9d432166d44a82fb26aa1ffa8660b665e2f0", "6947d67666208490f397c24d08f805e2c487692d", "bf10f79cbd99afc99f2d890ceeabb1ad939c389"]
 configuration_file = ["core-default.properties", "prod1.properties", "prod2.properties"]
-component_list = ["client/fs", "client/hdfs", "common", "server/common", "server/proxy", "server/worker"]
+component_list = ["common", "client/fs", "client/hdfs", "server/common", "server/proxy", "server/worker"]
 
 DEBUG_PREFIX="===============[uRTS Evaluation: "
 
@@ -180,7 +180,7 @@ def run_urts(config_file, curConfig, curCommit):
         os.chdir(component_path)
         os.system(mvn_cmd)
     end = time.time()
-    record_time_and_number("alluxio", "URTS", time_number_file_path, end - start, curConfig, curCommit)
+    record_time_and_number("alluxio", "URTS", component_list, time_number_file_path, end - start, curConfig, curCommit, project_module_path, cur_path)
     os.chdir(cur_path)
 
 
