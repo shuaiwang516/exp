@@ -180,7 +180,7 @@ def run_urts(config_file, curConfig, curCommit):
         os.chdir(component_path)
         os.system(mvn_cmd)
     end = time.time()
-    record_time_and_number("alluxio", "URTS", component_list, time_number_file_path, end - start, curConfig, curCommit, project_module_path, cur_path)
+    record_time_and_number_alluxio("alluxio", "URTS", component_list, time_number_file_path, end - start, curConfig, curCommit, project_module_path, cur_path)
     os.chdir(cur_path)
 
 

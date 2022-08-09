@@ -13,8 +13,8 @@ def record_time_and_number(project, mode, file_path, elapsed_time, curConfig, cu
         f.write("{}_{}_{}_{}:{}s,{}\n".format(mode, project, curConfig, curCommit, elapsed_time, num))
 
 
-# Record the experiment time
-def record_time_and_number(project, mode, component_list, file_path, elapsed_time, curConfig, curCommit, project_module_path, cur_path):
+# Record the experiment time for alluxio
+def record_time_and_number_alluxio(project, mode, component_list, file_path, elapsed_time, curConfig, curCommit, project_module_path, cur_path):
     print("{}TOTAL_TIME: {}-{} : {}s\n".format(DEBUG_PREFIX, curConfig, curCommit, elapsed_time), flush=True)
     # p = os.popen("grep 'Tests ' out.txt | sed -e 's/^.*Tests //' -e 's/.\[0;1;32m//' -e 's/.\[m//' -e 's/.\[1m//' -e 's/.\[0;1m//g' -e 's/.\[m//g' | sed -n 's/run: \([1-9][0-9]*\),.*- in \(.*\)/\2     \1/p' | wc -l")
     # num = int(p.read())

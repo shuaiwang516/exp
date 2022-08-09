@@ -18,7 +18,7 @@ production_configuration_file_path = os.path.join(project_module_path, "producti
 commits = ["6f2b2fa59fa5331942048f8e5e8a3a3a831f80b9", "bf10f79cbd99afc99f2d890ceeabb1ad939c389"]
 configuration_list = ["core-default.properties", "prod1.properties", "prod2.properties"]
 mvn_cmd = "mvn urts:retestall -Dcheckstyle.skip -Dlicense.skip -Dfindbugs.skip -Dmaven.javadoc.skip=true -DfailIfNoTests=false | tee out.txt"
-component_folder_list = ["client/fs/", "client/hdfs/", "common/", "server/common/", "server/proxy/", "server/worker/", "transport/"]
+component_folder_list = ["common/", "client/fs/", "client/hdfs/", "server/common/", "server/proxy/", "server/worker/", "transport/"]
 
 DEBUG_PREFIX="===============[Retestall Evaluation: "
 
@@ -44,7 +44,7 @@ def run_test(curConfig, curCommit):
         os.chdir(testing_component_path)
         os.system(mvn_cmd)
     end = time.time()
-    record_time_and_number("alluxio", "REALL", component_folder_list, time_number_file_path, end - start, curConfig, curCommit, project_module_path, cur_path)
+    record_time_and_number_alluxio("alluxio", "REALL", component_folder_list, time_number_file_path, end - start, curConfig, curCommit, project_module_path, cur_path)
     os.chdir(cur_path)
 
 

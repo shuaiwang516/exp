@@ -20,7 +20,7 @@ commits = ["6f2b2fa59fa5331942048f8e5e8a3a3a831f80b9", "5cf33595cb8c6e6d2738a211
 configuration_list = ["core-default.properties", "prod1.properties", "prod2.properties"]
 mvn_cmd = "mvn ekstazi:ekstazi -Dcheckstyle.skip -Dlicense.skip -Dfindbugs.skip -Dmaven.javadoc.skip=true -DfailIfNoTests=false | tee out.txt"
 mvn_clean_cmd = "mvn ekstazi:clean"
-component_folder_list = ["client/fs/", "client/hdfs/", "common/", "server/common/", "server/proxy/", "server/worker/"]
+component_folder_list = ["common/", "client/fs/", "client/hdfs/", "server/common/", "server/proxy/", "server/worker/"]
 prod1_config_changed_commit = ["f2825833fbf5d473fe7265aae749e8b3d52df143", "93437fa5763fb9e3f0fccd508208bf23b30041cc", "f49ed5f85ea2e9fdc60097f99421cd14362c6ccc", "984251fe3345659541c4b2330d2185320fa27738", "3dc352eaeec176f07fe4255e65555219bcc5764b", "9b6e34a204e85527eaf498f0e65ce529f4da740a", "564fcffa744df4d65188d4582748e0d282848c9a", "67908f2d1fd16b380d6a0f2af938b78588028cd4", "97c246d9a96f376928b806890a76aa430d8802b4", "6947d67666208490f397c24d08f805e2c487692d"]
 prod2_config_changed_commit = ["cc6136da11aee50a03b8270fc670e190ce99269e", "c6ae851a13ed788641d47c1e90b88dcc27955c4f", "221f0ed5851417ffc6cae4758d112d490e25f930", "e697da0a75d6f98f31d6cdd0c7190bf29d5da827", "9311d6a9d4c10599d0c86dfa6973397c0078d605", "3dc352eaeec176f07fe4255e65555219bcc5764b", "9f51b06a3986ccf030f8d416e70dfd23fab344c9", "9b6e34a204e85527eaf498f0e65ce529f4da740a", "67908f2d1fd16b380d6a0f2af938b78588028cd4", "a16bc958dd283dc9bc7c9fe7f17627ace327eb28"]
 config_changed_commit = {"prod1":prod1_config_changed_commit, "prod2":prod2_config_changed_commit}
@@ -49,7 +49,7 @@ def run_test(curConfig, curCommit):
         os.chdir(testing_component_path)
         os.system(mvn_cmd)
     end = time.time()
-    record_time_and_number("alluxio", "EKST", component_folder_list, time_number_file_path, end - start, curConfig, curCommit, project_module_path, cur_path)
+    record_time_and_number_alluxio("alluxio", "EKST", component_folder_list, time_number_file_path, end - start, curConfig, curCommit, project_module_path, cur_path)
     os.chdir(cur_path)
 
 
