@@ -205,7 +205,7 @@ def run():
             if cur_config_name != "core-default":
                 exclude_non_ctest()
             copy_production_config_file(config_file_name)
-            print("===============Ekstazi-Ext: " + curCommit + " Config: " + cur_config_name + " ===============", flush=True)
+            print("===============Ekstazi-Unsafe: " + curCommit + " Config: " + cur_config_name + " ===============", flush=True)
             run_test(curConfig, curCommit)
             record_test_class_number(curConfig, curCommit)
             copy_dependency_folder(curCommit, cur_config_name)
