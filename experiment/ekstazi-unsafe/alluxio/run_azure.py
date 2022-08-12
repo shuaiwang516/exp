@@ -1,4 +1,7 @@
-import os, shutil, time
+import os, shutil, time, sys
+sys.path.append("../../")
+from util import *
+
 cur_path = os.getcwd()
 non_ctest_list = "nonCtestList"
 project_url = "https://github.com/Alluxio/alluxio.git"
@@ -9,20 +12,20 @@ api_file1_path = os.path.join(project_module_path, "common/src/main/java/alluxio
 api_file2_path = os.path.join(project_module_path, "common/src/main/java/alluxio/conf/path/SpecificPathConfiguration.java")
 api_file3_path = os.path.join(project_module_path, "common/src/main/java/alluxio/conf/PropertyKey.java")
 pom_file_path = os.path.join(project_module_path, "pom.xml")
-time_file_path = os.path.join(cur_path, "time.txt")
-test_class_num_file_path = os.path.join(cur_path, "test_class_num.txt")
-ctest_configuration_file_path = os.path.join(project_module_path, "alluxio-ctest.properties")
+time_number_file_path = os.path.join(cur_path, "time_number.txt")
+#test_class_num_file_path = os.path.join(cur_path, "test_class_num.txt")
 production_configuration_file_path = os.path.join(project_module_path, "production-configuration.properties")
 commits = ["6f2b2fa59fa5331942048f8e5e8a3a3a831f80b9","5cf33595cb8c6e6d2738a211e12d445b5e98b663","5063016989da5284e1a94e80b7b2f2258aadaa7e","e9136cfd354d28ca9e953b282f4c327a0362d587","e697da0a75d6f98f31d6cdd0c7190bf29d5da827","d3b045247ae9baecc6fe45af8d410df38335d43d","984251fe3345659541c4b2330d2185320fa27738","f64540541748ba088eafbbac37fbd8c0458c410e","3c0275f4b81af80f98c8e0f1043bab8c8803f07c","696cb89bfc8b7dd41393e3003307947d2110e21f","ed7588da4adabc0555a018140b82f2f8215fe506","4c8b555920da6a844f3f30cc70493b563178518d","3064609e7489ea3c2111fd6d3c85b48270dc18f8","a16bc958dd283dc9bc7c9fe7f17627ace327eb28","dc922657fdbb6c5ccbbf2e0c1d2e02c66c921204","278b9e263842d61d7168cc29cac44666bfeea0d0","fa54b1bcd9fc891413cbd168862706d0fad0ad02","067e9d432166d44a82fb26aa1ffa8660b665e2f0","0dfa1615292a5c1adca7023a5f1330110df82482","2df1da2d4f6caa47574640bf54c52447e8c0f3ea","03f686a42238c9e5868132052810f3b5f93be918","38f110d924e016eff159ac1c8bb5cac14d3a2696","ebc291ff23f8b4ab6809a6876283e23287b1c64d","b9c66ca164d363bed9bcefb776a0b0f438d96441","050882ecee4ae4dc1bcf3eadcf0ecab3ca192f53","c6e5c2c1243bb9b07ff013ccc9efbb4146b3c92c","f950a7229e1183fdf5142ba4de6c6c9d9de1b3f6","f4f80a2d571903dbbbd824bf8fc5290a9b1a8d8c","c81d35f48521dcc7bf717594531dc7f76795b9cb","6f3fe6f4637261044b3938e620ac00e6e6e75708","b8aad79c004719566d679632026adefdcba8dea7","efe8f4c3f050910179f480896b424c93990a6941","931a9c136865968584ce9efbed6996d0ffbb601b","534e7d47e83f884469991a2c4b96078f3e24a183","e3af125d920b6aaca3af01fac9db1814f49d0262","62a58635bbd20148e2106c39a05208fd69f06dfb","cf83cc15bd6fd7190d3dc049c1cc619b2ae30a1e","6accf76ff7915a94e78c88d8e0f96a0951d379eb","2d939de0cafdb31f5cc19d3170751cc3fa15a972","061519fcbe25d0b3fbed05c91e2e8acf33ef9eb7","67288abbec68128272de74500b989dd82a24b2fb","5c2619a67c840a82ecaee38ff2d3666b9277cd70","b026dc935573c7fd813d36e585f357bc5bbe8754","fb8965dcd327bdbc9a13ad1281e0297fd4ef1bd4","e3e262816e1654960dcb5fc3877cfd05badd6bb9","a9548650a030d6f87a318f949d187a3e6d722896","f69a6f245b0e5d4ea40d929bcfb35fb805c3f7e6","5de0620f9d01c8c1d06d600428470a4ff69c8b9a","7fc1af3a995002146ef33f83b9c17ce6b9fa2af3","8e38ed90c2910febbf80dfc652993c8e9f313c89"]
 configuration_list = ["core-default.properties", "prod1.properties", "prod2.properties"]
 mvn_cmd = "mvn ekstazi:ekstazi -Dcheckstyle.skip -Dlicense.skip -Dfindbugs.skip -Dmaven.javadoc.skip=true -DfailIfNoTests=false | tee out.txt"
 mvn_cmd_exclude = "mvn urts:retestall -Dcheckstyle.skip -Dlicense.skip -Dfindbugs.skip -Dmaven.javadoc.skip=true -DfailIfNoTests=false | tee out.txt"
 mvn_clean_cmd = "mvn ekstazi:clean"
-component_list = ["common", "client/fs", "client/hdfs", "server/common", "server/proxy", "server/worker"]
+component_folder_list = ["common", "client/fs", "client/hdfs", "server/common", "server/proxy", "server/worker"]
 prod1_config_changed_commit = ["f64540541748ba088eafbbac37fbd8c0458c410e","3c0275f4b81af80f98c8e0f1043bab8c8803f07c","ed7588da4adabc0555a018140b82f2f8215fe506","38f110d924e016eff159ac1c8bb5cac14d3a2696","f950a7229e1183fdf5142ba4de6c6c9d9de1b3f6","e3af125d920b6aaca3af01fac9db1814f49d0262","62a58635bbd20148e2106c39a05208fd69f06dfb","2d939de0cafdb31f5cc19d3170751cc3fa15a972","67288abbec68128272de74500b989dd82a24b2fb","7fc1af3a995002146ef33f83b9c17ce6b9fa2af3"]
 prod2_config_changed_commit = ["e697da0a75d6f98f31d6cdd0c7190bf29d5da827","984251fe3345659541c4b2330d2185320fa27738","fa54b1bcd9fc891413cbd168862706d0fad0ad02","0dfa1615292a5c1adca7023a5f1330110df82482","ebc291ff23f8b4ab6809a6876283e23287b1c64d","f950a7229e1183fdf5142ba4de6c6c9d9de1b3f6","c81d35f48521dcc7bf717594531dc7f76795b9cb","e3af125d920b6aaca3af01fac9db1814f49d0262","2d939de0cafdb31f5cc19d3170751cc3fa15a972","061519fcbe25d0b3fbed05c91e2e8acf33ef9eb7"]
 config_changed_commit = {"prod1":prod1_config_changed_commit, "prod2":prod2_config_changed_commit}
 
+DEBUG_PREFIX="===============[Ekstazi-unsafe Evaluation: "
 
 # Clone testing project
 def clone():
@@ -30,24 +33,6 @@ def clone():
         shutil.rmtree(project_path)
     clone_cmd = "git clone " + project_url
     os.system(clone_cmd)
-
-
-# Record the experiment time
-def record_time(elapsed_time, curConfig, curCommit):
-    with open(time_file_path, 'a') as f:
-        f.write("{}-{} : {}s\n".format(curConfig, curCommit, elapsed_time))
-
-
-def record_test_class_number(curConfig, curCommit):
-    total_num = 0
-    for component in component_list:
-        component_path = os.path.join(project_module_path, component) 
-        os.chdir(component_path)
-        p = os.popen("grep 'Tests ' out.txt | sed -e 's/^.*Tests //' -e 's/.\[0;1;32m//' -e 's/.\[m//' -e 's/.\[1m//' -e 's/.\[0;1m//g' -e 's/.\[m//g' | sed -n 's/run: \([1-9][0-9]*\),.*- in \(.*\)/\2     \1/p' | wc -l")
-        total_num += int(p.read())
-    with open(test_class_num_file_path, 'a') as f:
-        f.write("{}-{} : {}\n".format(curConfig, curCommit, total_num))
-    os.chdir(cur_path)
 
 
 # Copy the production configuration to the project for configuration tests
@@ -59,15 +44,15 @@ def copy_production_config_file(config_file_name):
 # Run tests
 def run_test(curConfig, curCommit):
     start = time.time()
-    for component in component_list:
-        testing_component_path = os.path.join(project_module_path, component)   
+    for folder in component_folder_list:
+        testing_component_path = os.path.join(project_module_path, folder)   
         os.chdir(testing_component_path)
-        if component == "client/fs":
+        if folder == "client/fs":
             os.system(mvn_cmd_exclude)
         else:
             os.system(mvn_cmd)
     end = time.time()
-    record_time(end - start, curConfig, curCommit)
+    record_time_and_number_alluxio("alluxio", "UNSAFE", component_folder_list, time_number_file_path, end - start, curConfig, curCommit, project_module_path, cur_path)
     os.chdir(cur_path)
 
 
@@ -219,7 +204,7 @@ def copy_config_mapping():
 
 # Prepare ekstazi config file
 def prepare_ekstazi_config_file():
-    for component in component_list:
+    for component in component_folder_list:
         source_path = os.path.join(cur_path, ".twoekstazirc")
         if component == "common/":
             source_path = os.path.join(cur_path, ".oneekstazirc")
@@ -242,26 +227,6 @@ def notSkipTestsInAlluxio():
             else:
                 f.write(line)
   
-  
-def mimic_config_file_change(curCommit, cur_config_name):
-    if commits.index(curCommit) < commits.index(config_changed_commit[cur_config_name][0]):
-        return
-    elif commits.index(curCommit) >= commits.index(config_changed_commit[cur_config_name][-1]):
-        added_commit_sha = config_changed_commit[cur_config_name][-1]
-    else:  
-        for i in range(len(config_changed_commit[cur_config_name]) - 1):
-            if (commits.index(curCommit) >= commits.index(config_changed_commit[cur_config_name][i])) and  (commits.index(curCommit) < commits.index(config_changed_commit[cur_config_name][i+1])):
-                added_commit_sha = config_changed_commit[cur_config_name][i]
-    with open(api_file3_path, 'r') as f:
-        lines = f.readlines()
-    with open(api_file3_path, 'w') as f:
-        for line in lines:
-            stringModified = "          .setDescription(\"Version of Alluxio. User should never modify this property.{}\")\n".format(added_commit_sha)
-            if ".setDescription(\"Version of Alluxio. User should never modify this property" in line:
-                f.write(stringModified)
-            else:
-                f.write(line)
-                              
 
 # Prepare environment and all files
 def do_preparation(curCommit, cur_config_name):
@@ -272,8 +237,6 @@ def do_preparation(curCommit, cur_config_name):
     prepare_ekstazi_config_file()
     add_ekstazi_runner_pom()
     notSkipTestsInAlluxio()
-    if cur_config_name != "core-default":
-        mimic_config_file_change(curCommit, cur_config_name)
     maven_install()
 
 
@@ -283,10 +246,11 @@ def clean_dependency_folder():
     os.chdir(cur_path)
 
 
-def run():
+def run(argv):
     clone()
+    commits_to_run=[argv[1], argv[2]]
     for i in range(len(configuration_list)):
-        for curCommit in commits:
+        for curCommit in commits_to_run:
             curConfig = configuration_list[i]
             cur_config_name = curConfig.split(".")[0]
             config_file_name = curConfig + "-" + curCommit
@@ -294,11 +258,11 @@ def run():
             if cur_config_name != "core-default":
                 exclude_non_ctest()
             copy_production_config_file(config_file_name)
-            print("===============Ekstazi-Ext: " + curCommit + " Config: " + cur_config_name + " ===============", flush=True)
+            print(DEBUG_PREFIX + curCommit + " Config: " + cur_config_name + " ===============", flush=True)
             run_test(curConfig, curCommit)
-            record_test_class_number(curConfig, curCommit)
+            copy_dependency_folder_ekstazi_alluxio("alluxio", "UNSAFE", cur_path, component_folder_list, project_module_path, curCommit, cur_config_name, i)
         clean_dependency_folder()
         
 
 if __name__ == '__main__':
-    run()
+    run(sys.argv)
