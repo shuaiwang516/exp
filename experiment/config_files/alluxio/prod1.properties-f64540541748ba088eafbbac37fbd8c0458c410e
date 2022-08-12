@@ -1,5 +1,3 @@
-alluxio.master.hostname=localhost
-alluxio.underfs.address=${alluxio.work.dir}/underFSStorage
 alluxio.worker.tieredstore.level0.dirs.path=/dev/shm
 alluxio.user.file.readtype.default=CACHE_PROMOTE
 alluxio.user.file.writetype.default=CACHE_THROUGH

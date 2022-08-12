@@ -12,7 +12,7 @@ time_file_path = os.path.join(cur_path, "time.txt")
 test_class_num_file_path = os.path.join(cur_path, "test_class_num.txt")
 ctest_configuration_file_path = os.path.join(project_module_path, "alluxio-ctest.properties")
 production_configuration_file_path = os.path.join(project_module_path, "production-configuration.properties")
-commits = ["6f2b2fa59fa5331942048f8e5e8a3a3a831f80b9","5cf33595cb8c6e6d2738a211e12d445b5e98b663","5063016989da5284e1a94e80b7b2f2258aadaa7e","f2825833fbf5d473fe7265aae749e8b3d52df143","e9136cfd354d28ca9e953b282f4c327a0362d587","e697da0a75d6f98f31d6cdd0c7190bf29d5da827","d3b045247ae9baecc6fe45af8d410df38335d43d","984251fe3345659541c4b2330d2185320fa27738","9311d6a9d4c10599d0c86dfa6973397c0078d605","f64540541748ba088eafbbac37fbd8c0458c410e","fcb0b4c9d4f3b787a091a2721d0a7d807055caaa","3dc352eaeec176f07fe4255e65555219bcc5764b","3c0275f4b81af80f98c8e0f1043bab8c8803f07c","696cb89bfc8b7dd41393e3003307947d2110e21f","ed7588da4adabc0555a018140b82f2f8215fe506","4c028f426f13f3ab4c493d4dd12f46fc8217576d","564fcffa744df4d65188d4582748e0d282848c9a","4c8b555920da6a844f3f30cc70493b563178518d","3064609e7489ea3c2111fd6d3c85b48270dc18f8","a16bc958dd283dc9bc7c9fe7f17627ace327eb28","97c246d9a96f376928b806890a76aa430d8802b4","afe74e0a5489eac0fad1e78ce5b52b1a7b2a9754","dc922657fdbb6c5ccbbf2e0c1d2e02c66c921204","278b9e263842d61d7168cc29cac44666bfeea0d0","fa54b1bcd9fc891413cbd168862706d0fad0ad02","067e9d432166d44a82fb26aa1ffa8660b665e2f0","6947d67666208490f397c24d08f805e2c487692d","0dfa1615292a5c1adca7023a5f1330110df82482","2df1da2d4f6caa47574640bf54c52447e8c0f3ea","03f686a42238c9e5868132052810f3b5f93be918","38f110d924e016eff159ac1c8bb5cac14d3a2696","e2559a6919573f86a078ec82f272e705d5175bd9","f4ace8f14c1f96a85d1c441fb2acc4f6259c4403","ebc291ff23f8b4ab6809a6876283e23287b1c64d","b9c66ca164d363bed9bcefb776a0b0f438d96441","050882ecee4ae4dc1bcf3eadcf0ecab3ca192f53","fa6cb7002b84109b770f8943bbf083810030a8e9","c6e5c2c1243bb9b07ff013ccc9efbb4146b3c92c","30991a93091d34391ca5728e178c141858baacf8","782f077f1e2512656fc49a2dc8965a3b8f2b4daa","f950a7229e1183fdf5142ba4de6c6c9d9de1b3f6","af1deb641452e55d70374d553dbb5deb89198e2a","31ba1cfd8e2599231f7ce8b40cd02253e1b65a7c","f4f80a2d571903dbbbd824bf8fc5290a9b1a8d8c","d415893ccc05be6d8667128ed38745c9dffe3c36","c81d35f48521dcc7bf717594531dc7f76795b9cb","8225183067d907160af630bb2b3370b9b65d943e","6f3fe6f4637261044b3938e620ac00e6e6e75708","b8aad79c004719566d679632026adefdcba8dea7","efe8f4c3f050910179f480896b424c93990a6941"]
+commits = ["6f2b2fa59fa5331942048f8e5e8a3a3a831f80b9","5cf33595cb8c6e6d2738a211e12d445b5e98b663","5063016989da5284e1a94e80b7b2f2258aadaa7e","e9136cfd354d28ca9e953b282f4c327a0362d587","e697da0a75d6f98f31d6cdd0c7190bf29d5da827","d3b045247ae9baecc6fe45af8d410df38335d43d","984251fe3345659541c4b2330d2185320fa27738","f64540541748ba088eafbbac37fbd8c0458c410e","3c0275f4b81af80f98c8e0f1043bab8c8803f07c","696cb89bfc8b7dd41393e3003307947d2110e21f","ed7588da4adabc0555a018140b82f2f8215fe506","4c8b555920da6a844f3f30cc70493b563178518d","3064609e7489ea3c2111fd6d3c85b48270dc18f8","a16bc958dd283dc9bc7c9fe7f17627ace327eb28","dc922657fdbb6c5ccbbf2e0c1d2e02c66c921204","278b9e263842d61d7168cc29cac44666bfeea0d0","fa54b1bcd9fc891413cbd168862706d0fad0ad02","067e9d432166d44a82fb26aa1ffa8660b665e2f0","0dfa1615292a5c1adca7023a5f1330110df82482","2df1da2d4f6caa47574640bf54c52447e8c0f3ea","03f686a42238c9e5868132052810f3b5f93be918","38f110d924e016eff159ac1c8bb5cac14d3a2696","ebc291ff23f8b4ab6809a6876283e23287b1c64d","b9c66ca164d363bed9bcefb776a0b0f438d96441","050882ecee4ae4dc1bcf3eadcf0ecab3ca192f53","c6e5c2c1243bb9b07ff013ccc9efbb4146b3c92c","f950a7229e1183fdf5142ba4de6c6c9d9de1b3f6","f4f80a2d571903dbbbd824bf8fc5290a9b1a8d8c","c81d35f48521dcc7bf717594531dc7f76795b9cb","6f3fe6f4637261044b3938e620ac00e6e6e75708","b8aad79c004719566d679632026adefdcba8dea7","efe8f4c3f050910179f480896b424c93990a6941","931a9c136865968584ce9efbed6996d0ffbb601b","534e7d47e83f884469991a2c4b96078f3e24a183","e3af125d920b6aaca3af01fac9db1814f49d0262","62a58635bbd20148e2106c39a05208fd69f06dfb","cf83cc15bd6fd7190d3dc049c1cc619b2ae30a1e","6accf76ff7915a94e78c88d8e0f96a0951d379eb","2d939de0cafdb31f5cc19d3170751cc3fa15a972","061519fcbe25d0b3fbed05c91e2e8acf33ef9eb7","67288abbec68128272de74500b989dd82a24b2fb","5c2619a67c840a82ecaee38ff2d3666b9277cd70","b026dc935573c7fd813d36e585f357bc5bbe8754","fb8965dcd327bdbc9a13ad1281e0297fd4ef1bd4","e3e262816e1654960dcb5fc3877cfd05badd6bb9","a9548650a030d6f87a318f949d187a3e6d722896","f69a6f245b0e5d4ea40d929bcfb35fb805c3f7e6","5de0620f9d01c8c1d06d600428470a4ff69c8b9a","7fc1af3a995002146ef33f83b9c17ce6b9fa2af3","8e38ed90c2910febbf80dfc652993c8e9f313c89"]
 configuration_list = ["core-default.properties", "prod1.properties", "prod2.properties"]
 mvn_cmd = "mvn urts:retestall -Dcheckstyle.skip -Dlicense.skip -Dfindbugs.skip -Dmaven.javadoc.skip=true -DfailIfNoTests=false | tee out.txt"
 mvn_cmd_exclude = "mvn urts:retestall -Dtest=!FileSystemFactoryTest -Dcheckstyle.skip -Dlicense.skip -Dfindbugs.skip -Dmaven.javadoc.skip=true -DfailIfNoTests=false | tee out.txt"
@@ -35,7 +35,7 @@ def record_time(elapsed_time, curConfig, curCommit):
 
 def record_test_class_number(curConfig, curCommit):
     total_num = 0
-    for component in component_folder_list:
+    for component in component_list:
         component_path = os.path.join(project_module_path, component) 
         os.chdir(component_path)
         p = os.popen("grep 'Tests ' out.txt | sed -e 's/^.*Tests //' -e 's/.\[0;1;32m//' -e 's/.\[m//' -e 's/.\[1m//' -e 's/.\[0;1m//g' -e 's/.\[m//g' | sed -n 's/run: \([1-9][0-9]*\),.*- in \(.*\)/\2     \1/p' | wc -l")
@@ -54,8 +54,8 @@ def copy_production_config_file(config_file_name):
 # Run tests
 def run_test(curConfig, curCommit):
     start = time.time()
-    for folder in component_folder_list:
-        testing_component_path = os.path.join(project_module_path, folder)   
+    for component in component_list:
+        testing_component_path = os.path.join(project_module_path, component)   
         os.chdir(testing_component_path)
         if component == "client/fs":
             os.system(mvn_cmd_exclude)
@@ -213,7 +213,7 @@ def copy_config_mapping():
 
 # Prepare urts:retestall config file
 def prepare_retestall_config_file():
-    for component in component_folder_list:
+    for component in component_list:
         source_path = os.path.join(cur_path, ".tworetestallrc")
         if component == "common/" or component == "transport/":
             source_path = os.path.join(cur_path, ".oneretestallrc")
