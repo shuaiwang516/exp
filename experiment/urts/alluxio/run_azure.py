@@ -187,6 +187,7 @@ enter = False
 
 # Install dependency module
 def maven_install_module():
+    global enter
     if not enter:
         os.chdir(project_root_path)
         os.system("mvn clean install -DskipTests -Dcheckstyle.skip -Dlicense.skip -Dfindbugs.skip -Dmaven.javadoc.skip=true")
