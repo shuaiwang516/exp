@@ -183,11 +183,16 @@ def run_urts(config_file, curConfig, curCommit):
     record_time_and_number_alluxio("alluxio", "URTS", component_list, time_number_file_path, end - start, curConfig, curCommit, project_module_path, cur_path)
     os.chdir(cur_path)
 
+enter = False
 
 # Install dependency module
 def maven_install_module():
+    if not enter:
+        os.chdir(project_root_path)
+        os.system("mvn clean install -DskipTests -Dcheckstyle.skip -Dlicense.skip -Dfindbugs.skip -Dmaven.javadoc.skip=true")
+        enter = True
     os.chdir(project_root_path)
-    os.system("mvn clean install -DskipTests -Dcheckstyle.skip -Dlicense.skip -Dfindbugs.skip -Dmaven.javadoc.skip=true")
+    os.system("mvn install -pl core -amd -DskipTests -Dcheckstyle.skip -Dlicense.skip -Dfindbugs.skip -Dmaven.javadoc.skip=true")
     os.chdir(project_module_path)
     os.system("mvn install -am -DskipTests -Dcheckstyle.skip -Dlicense.skip -Dfindbugs.skip -Dmaven.javadoc.skip=true")
     os.chdir(cur_path)

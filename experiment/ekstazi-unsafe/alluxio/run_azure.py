@@ -63,10 +63,16 @@ def checkout_commit(curCommit):
     os.chdir(cur_path)
 
 
-# Install the module
+enter = False
+
+# Install dependency module
 def maven_install():
+    if not enter:
+        os.chdir(project_path)
+        os.system("mvn clean install -DskipTests -Dcheckstyle.skip -Dlicense.skip -Dfindbugs.skip -Dmaven.javadoc.skip=true")
+        enter = True
     os.chdir(project_path)
-    os.system("mvn clean install -DskipTests -Dcheckstyle.skip -Dlicense.skip -Dfindbugs.skip -Dmaven.javadoc.skip=true")
+    os.system("mvn install -pl core -amd -DskipTests -Dcheckstyle.skip -Dlicense.skip -Dfindbugs.skip -Dmaven.javadoc.skip=true")
     os.chdir(project_module_path)
     os.system("mvn install -am -DskipTests -Dcheckstyle.skip -Dlicense.skip -Dfindbugs.skip -Dmaven.javadoc.skip=true")
     os.chdir(cur_path)
