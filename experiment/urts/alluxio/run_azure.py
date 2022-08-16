@@ -44,9 +44,10 @@ def modify_api():
                 f.write(line)
                 f.write("import org.urts.configAware.ConfigListener; // UNIFY_TEST\n")  
                 f.write("import alluxio.util.ConfigurationUtils; // UNIFY_TEST\n")
+                f.write("import java.lang.management.ManagementFactory; // UNIFY_TEST\n")
             elif "public class AlluxioProperties {" in line:
                 f.write(line)
-                f.write("  public static String CTEST_FILEPATH = System.getProperty(\"user.dir\").split(\"/alluxio/core/\")[0] + \"/alluxio/core/alluxio-ctest.properties\"; // UNIFY_TESTS\n")
+                f.write("  public static String CTEST_FILEPATH = System.getProperty(\"user.dir\").split(\"/alluxio/core/\")[0] + \"/alluxio/core/alluxio-ctest-\" + ManagementFactory.getRuntimeMXBean().getName().split(\"@\")[0] + \".properties\"; // UNIFY_TESTS\n")
             elif "public AlluxioProperties()" in line:
                 f.write("  public AlluxioProperties() {\n")
                 f.write("    Properties ctestProps = ConfigurationUtils.loadPropertiesFromFile(CTEST_FILEPATH); // UNIFY_TESTS\n")
