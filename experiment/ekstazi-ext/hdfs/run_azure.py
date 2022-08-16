@@ -21,8 +21,8 @@ commits = ["1576f81dfe0156514ec06b6051e5df7928a294e2", "c665ab02ed5c400b0c5e9e35
 configuration_list = ["core-default.xml", "prod1.xml", "prod2.xml"]
 mvn_cmd = "mvn ekstazi:ekstazi -DfailIfNoTests=false | tee out.txt"
 mvn_clean_cmd = "mvn ekstazi:clean"
-prod1_config_changed_commit = ["c665ab02ed5c400b0c5e9e350686cd0e5b5e6972", "98a74e23514392dc8859f407cd40d9c96d8c5923", "1abd03d68f4f236674ce929164cc460037730abb"]
-prod2_config_changed_commit = ["832a3c6a8918c73fa85518d5223df65b48f706e9", "b8ab19373d1a291b5faa9944e545b6d5c812a6eb"]
+prod1_config_changed_commit = ["bce14e746b3d00e692820f28b72ffe306f74d0b2","a2a0283c7be8eac641a256f06731cb6e4bab3b09","839fcf7682270bc6ba151875549d64d81917f425","c255feb5d7880e41abd9bd3acd0807233dc6124f","c488abbc79cc1ad2596cbf509a0cde14acc5ad6b","fdef2b4ccacb8753aac0f5625505181c9b4dc154","f78b6d47f9d5c05bd990aec3481e6cede93d43ea","4cac6ec40528f6a1252de43599003291cd5fe5c3","20a4b1ae36483b5574c09516373557c764903c72","56c7ada7a524812208a2112412a757ec6be02e5e"]
+prod2_config_changed_commit = ["b8ab19373d1a291b5faa9944e545b6d5c812a6eb","f4b24c68e76df40d55258fc5391baabfa9ac362d","762a83e044b84250c6e2543e02f48136361ea3eb","eefa664fea1119a9c6e3ae2d2ad3069019fbd4ef","839fcf7682270bc6ba151875549d64d81917f425","2b304ad6457bca4286be18f689f8b855395831c6","1ad674e5489e6080f21c308673ecc73a54ba3752","c255feb5d7880e41abd9bd3acd0807233dc6124f","bdc9c8809e1f38c0e8cbb394ffa4f6cd1cf2a819","52b9319e57881411a03b53eca6b3c5d123bed796"]
 config_changed_commit = {"prod1":prod1_config_changed_commit, "prod2":prod2_config_changed_commit}
 
 DEBUG_PREFIX="===============[Ekstazi-ext Evaluation: "
