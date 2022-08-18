@@ -52,8 +52,11 @@ def modify_api():
         with open(hdfs_api_file_path, 'w') as f:
             for line in lines:
                 f.write(line)
+                if "package org.apache.hadoop.hdfs" in line:
+                    f.write("import java.lang.management.ManagementFactory;\n")
                 if "Configuration.addDefaultResource(\"hdfs-site.xml\");" in line:
-                    f.write("    Configuration.addDefaultResource(\"hdfs-ctest.xml\"); //UNIFY_TESTS\n")
+                    f.write('    String pid = ManagementFactory.getRuntimeMXBean().getName().split("@")[0]; //UNIFY_TESTS\n')
+                    f.write('    Configuration.addDefaultResource("hdfs-ctest-" + pid + ".xml"); //UNIFY_TESTS\n')
                     successInsert = True
     
     if not successInsert:
