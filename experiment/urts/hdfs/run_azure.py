@@ -183,6 +183,7 @@ def modify_pom():
 
 # Run tests
 def run_urts(config_file, curConfig, curCommit):
+    maven_install_module()
     os.chdir(project_module_path)
     shutil.copy(config_file, "curConfigFile.xml")
     print(DEBUG_PREFIX + "RUN uRTS]=================", flush=True)
@@ -196,7 +197,7 @@ def run_urts(config_file, curConfig, curCommit):
 # Install dependency module
 def maven_install_module():
     os.chdir(project_root_path)
-    os.system("mvn install -DskipTests  -Denforcer.skip=true -am -pl " + project_module_name)
+    os.system("mvn clean install -DskipTests  -Denforcer.skip=true -am -pl " + project_module_name)
     os.chdir(cur_path)
 
 
@@ -241,7 +242,6 @@ def do_preparation(commit):
     modify_api()
     copy_ctest_mapping()
     copy_get_config_value_test()
-    maven_install_module()
 
 
 def run(argv):
