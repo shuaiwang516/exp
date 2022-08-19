@@ -14,7 +14,7 @@ hdfs_api_file_path = os.path.join(project_root_path, "hadoop-hdfs-project/hadoop
 test_copied_path = os.path.join(project_module_path, "src/test/java/org/apache/hadoop")
 time_number_file_path = os.path.join(cur_path, "time_number.txt")
 #test_class_num_file_path = os.path.join(cur_path, "test_class_num.txt")
-mvn_cmd = "mvn urts:urts -DgetterClass=TestGetConfigValueForConfigAware -DfailIfNoTests=false -Dmaven.test.failure.ignore=true | tee out.txt"
+mvn_cmd = "mvn urts:urts  -DgetterClass=TestGetConfigValueForConfigAware -DfailIfNoTests=false -Dmaven.test.failure.ignore=true | tee out.txt"
 #commits = ["1576f81dfe0156514ec06b6051e5df7928a294e2", "c665ab02ed5c400b0c5e9e350686cd0e5b5e6972", "028ec4704b9323954c091bcda3433f7b79cb61de", "832a3c6a8918c73fa85518d5223df65b48f706e9", "3fdeb7435add3593a0a367fff6e8622a73ad9fa3", "98a74e23514392dc8859f407cd40d9c96d8c5923", "1abd03d68f4f236674ce929164cc460037730abb", "8ce30f51f999c0a80db53a2a96b5be5505d4d151", "bce14e746b3d00e692820f28b72ffe306f74d0b2", "b8ab19373d1a291b5faa9944e545b6d5c812a6eb", "b38b00e52839911ab4e0b97fd269c53bf7d1380f", "59fc4061cb619c85538277588f326469dfa08fb8", "4a26a61ecd54bd36b6d089f999359da5fca16723", "f4b24c68e76df40d55258fc5391baabfa9ac362d", "c748fce17ace8b45ee0f3c3967d87893765eea61", "a2a0283c7be8eac641a256f06731cb6e4bab3b09", "762a83e044b84250c6e2543e02f48136361ea3eb", "a1a318417105f155ed5c9d34355309775eb43d11", "eefa664fea1119a9c6e3ae2d2ad3069019fbd4ef", "4ef27a596fd1d7be5e437ab444b12fe450e79e79"]
 configuration_file = ["core-default.xml", "prod1.xml", "prod2.xml"]
 
@@ -197,7 +197,7 @@ def run_urts(config_file, curConfig, curCommit):
 # Install dependency module
 def maven_install_module():
     os.chdir(project_root_path)
-    os.system("mvn clean install -DskipTests -am -pl " + project_module_name)
+    os.system("mvn clean install -DskipTests  -Denforcer.skip=true -am -pl " + project_module_name)
     os.chdir(cur_path)
 
 
