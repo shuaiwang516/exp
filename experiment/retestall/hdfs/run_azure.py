@@ -17,7 +17,7 @@ time_number_file_path = os.path.join(cur_path, "time_number.txt")
 ctest_configuration_file_path = os.path.join(project_module_path, "src/main/resources/hdfs-ctest.xml")
 production_configuration_file_path = os.path.join(project_module_path, "production-configuration.xml")
 commits = ["1576f81dfe0156514ec06b6051e5df7928a294e2", "b8ab19373d1a291b5faa9944e545b6d5c812a6eb"]
-configuration_list = ["core-default.xml", "prod1.xml", "prod2.xml"]
+configuration_list = ["prod2.xml"]#["core-default.xml", "prod1.xml", "prod2.xml"]
 mvn_cmd = "mvn urts:retestall | tee out.txt"
 
 
@@ -40,6 +40,7 @@ def copy_production_config_file(config_file_name):
 
 # Run tests
 def run_test(curConfig, curCommit):
+    maven_install()
     os.chdir(project_module_path)
     start = time.time()
     os.system(mvn_cmd)
@@ -58,7 +59,7 @@ def checkout_commit(commit):
 # Install Project
 def maven_install():
     os.chdir(project_path)
-    os.system("mvn clean install -DskipTests -am -pl " + project_module)
+    os.system("mvn clean install -DskipTests -Denforcer.skip=true -am -pl " + project_module)
     os.chdir(cur_path)
     
 
@@ -166,20 +167,20 @@ def do_preparation(curCommit):
     copy_config_mapping()
     prepare_retestall_config_file()
     add_retestall_runner_pom()
-    maven_install()
 
 
 def run(argv):
     clone()
-    commits_to_run=[argv[1], argv[2]]
+    #commits_to_run=[argv[1], argv[2]]
+    commits_to_run=[argv[2]]
     for curCommit in commits_to_run:
         do_preparation(curCommit)
         for i in range(len(configuration_list)):
             curConfig = configuration_list[i]
             cur_config_name = curConfig.split(".")[0]
             config_file_name = curConfig + "-" + curCommit
-            if i == 1:
-                exclude_non_ctest()
+            #if i == 1:
+            exclude_non_ctest()
             copy_production_config_file(config_file_name)
             print(DEBUG_PREFIX + curCommit + " Config: " + cur_config_name + " ===============", flush=True)
             run_test(curConfig, curCommit)
