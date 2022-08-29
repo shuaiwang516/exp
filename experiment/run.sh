@@ -25,7 +25,7 @@ function runExperiment() {
 }
 
 function main() {
-    if [ -z $mode ] || [ -z $project ] || [ -z $sha1 ] || [ -z $sha2 ]; then
+    if [ -z $mode ] || [ -z $project ]; then
         usage
     elif [ $mode = "urts" ] || [ $mode = "retestall" ] || [ $mode = "ekstazi-ext" ] || [ $mode = "ekstazi-unsafe" ]; then
         runExperiment
