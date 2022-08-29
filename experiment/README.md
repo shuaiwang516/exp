@@ -1,3 +1,6 @@
+# Data In Paper
+You can find all CSV files that stroe data shown in paper in `csv_files` directory and all figures are in `figures` directory.
+
 # Experiment
 
 ## Setup Environment
@@ -36,5 +39,3 @@ $ bash parse_csv.py hcommon csv_files/hcommon/
 $ python3 draw.py hcommon csv_files/hcommon/summary.csv figures/hcommon 
 ```
 
-## Data In Paper
-You can find all CSV data that shown in the paper in `csv_files` directory and all figures in `figures` directory.
