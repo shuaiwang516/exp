@@ -1,6 +1,3 @@
-# Data In Paper
-You can find all CSV files that stroe data shown in paper in `csv_files` directory and all figures are in `figures` directory.
-
 # Experiment
 
 ## Setup Environment
