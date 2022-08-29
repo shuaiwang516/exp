@@ -15,7 +15,7 @@ time_number_file_path = os.path.join(cur_path, "time_number.txt")
 #test_class_num_file_path = os.path.join(cur_path, "test_class_num.txt")
 ctest_configuration_file_path = os.path.join(project_module_path, "alluxio-ctest.properties")
 production_configuration_file_path = os.path.join(project_module_path, "production-configuration.properties")
-commits = ["2d05d7c4b24ef1662afafdae8daf33b2e79a3270","fe7ee4a3ae52e4f3f1466ae0682bc265d86a0252","4da0071c805923489d9da506b58cc829b82cfe71","6a9794218cd1edfd88e7e159a1801419fa98da7d","11e47c48990a4703c606621a3ef1013ac0598419","7a2aaae3c605349a1e2c8d9f530a54b70c3305c4","698b4f0a01bb821a9daa796d3b28f35564478116","1dabaeba80c4c547fe4d32c0da429b1e7377479d","2e046aae83facd12cd2776b960e42d7a66cead8c","46116a76149d2f137a71d9a180d1f6193f4bf1c8","5e943c29e19d713659df98c3f19867dffaa0f882","6f2b2fa59fa5331942048f8e5e8a3a3a831f80b9","5cf33595cb8c6e6d2738a211e12d445b5e98b663","5063016989da5284e1a94e80b7b2f2258aadaa7e","e9136cfd354d28ca9e953b282f4c327a0362d587","e697da0a75d6f98f31d6cdd0c7190bf29d5da827","d3b045247ae9baecc6fe45af8d410df38335d43d","984251fe3345659541c4b2330d2185320fa27738","f64540541748ba088eafbbac37fbd8c0458c410e","3c0275f4b81af80f98c8e0f1043bab8c8803f07c","696cb89bfc8b7dd41393e3003307947d2110e21f","ed7588da4adabc0555a018140b82f2f8215fe506","4c8b555920da6a844f3f30cc70493b563178518d","3064609e7489ea3c2111fd6d3c85b48270dc18f8","a16bc958dd283dc9bc7c9fe7f17627ace327eb28","dc922657fdbb6c5ccbbf2e0c1d2e02c66c921204","278b9e263842d61d7168cc29cac44666bfeea0d0","fa54b1bcd9fc891413cbd168862706d0fad0ad02","067e9d432166d44a82fb26aa1ffa8660b665e2f0","0dfa1615292a5c1adca7023a5f1330110df82482","2df1da2d4f6caa47574640bf54c52447e8c0f3ea","03f686a42238c9e5868132052810f3b5f93be918","38f110d924e016eff159ac1c8bb5cac14d3a2696","ebc291ff23f8b4ab6809a6876283e23287b1c64d","b9c66ca164d363bed9bcefb776a0b0f438d96441","050882ecee4ae4dc1bcf3eadcf0ecab3ca192f53","c6e5c2c1243bb9b07ff013ccc9efbb4146b3c92c","f950a7229e1183fdf5142ba4de6c6c9d9de1b3f6","f4f80a2d571903dbbbd824bf8fc5290a9b1a8d8c","c81d35f48521dcc7bf717594531dc7f76795b9cb","6f3fe6f4637261044b3938e620ac00e6e6e75708","b8aad79c004719566d679632026adefdcba8dea7","efe8f4c3f050910179f480896b424c93990a6941","ff293c735c7f12eec4ad8e4ec66a1c2f9598c0a8","9f3676b5b81b8bbf165ed8c3fac85e6ced95c23b","c1e12fb78bb0110c6e5d85ca112d7a0d904a7c8a","6accf76ff7915a94e78c88d8e0f96a0951d379eb","40d2a06c1e8ceeff35e7f7ec0eaef549164c86dd","2d939de0cafdb31f5cc19d3170751cc3fa15a972","67288abbec68128272de74500b989dd82a24b2fb"]
+commits = ["2d05d7c4b24ef1662afafdae8daf33b2e79a3270","67288abbec68128272de74500b989dd82a24b2fb"]
 configuration_list = ["core-default.properties", "prod1.properties", "prod2.properties"]
 mvn_cmd = "mvn urts:retestall -Dcheckstyle.skip -Dlicense.skip -Dfindbugs.skip -Dmaven.javadoc.skip=true -DfailIfNoTests=false | tee out.txt"
 component_folder_list = ["common/", "client/fs/", "client/hdfs/", "server/common/", "server/proxy/", "server/worker/", "transport/"]
@@ -231,10 +231,9 @@ def do_preparation(curCommit):
     maven_install()
 
 
-def run(argv):
+def run():
     clone()
-    commits_to_run=[argv[1], argv[2]]
-    for curCommit in commits_to_run:
+    for curCommit in commits:
         do_preparation(curCommit)
         for i in range(len(configuration_list)):
             curConfig = configuration_list[i]
@@ -249,4 +248,4 @@ def run(argv):
 
 
 if __name__ == '__main__':
-    run(sys.argv)
+    run()

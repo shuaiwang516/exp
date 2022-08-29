@@ -169,10 +169,9 @@ def do_preparation(curCommit):
     add_retestall_runner_pom()
 
 
-def run(argv):
+def run():
     clone()
-    commits_to_run=[argv[1], argv[2]]
-    for curCommit in commits_to_run:
+    for curCommit in commits:
         do_preparation(curCommit)
         for i in range(len(configuration_list)):
             curConfig = configuration_list[i]
@@ -187,4 +186,4 @@ def run(argv):
 
 
 if __name__ == '__main__':
-    run(sys.argv)
+    run()

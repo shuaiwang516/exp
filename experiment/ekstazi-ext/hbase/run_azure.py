@@ -223,11 +223,10 @@ def clean_dependency_folder():
     os.chdir(cur_path)
 
 
-def run(argv):
+def run():
     clone()
-    commits_to_run=[argv[1], argv[2]]
     for i in range(len(configuration_list)):
-        for curCommit in commits_to_run:
+        for curCommit in commits:
             curConfig = configuration_list[i]
             cur_config_name = curConfig.split(".")[0]
             config_file_name = curConfig + "-" + curCommit
@@ -241,4 +240,4 @@ def run(argv):
             
 
 if __name__ == '__main__':
-    run(sys.argv)
+    run()
