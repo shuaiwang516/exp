@@ -35,3 +35,6 @@ $ bash parse_csv.py hcommon csv_files/hcommon/
 # Generate figures into `figures/hcommon` directory
 $ python3 draw.py hcommon csv_files/hcommon/summary.csv figures/hcommon 
 ```
+
+## Data In Paper
+You can find all CSV data that shown in the paper in `csv_files` directory and all figures in `figures` directory.
