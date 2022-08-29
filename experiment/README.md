@@ -2,7 +2,7 @@
 
 ## Setup Environment
 ```
-$ ./setup_ubuntu.sh
+$ bash setup_ubuntu.sh
 ```
 
 ## Install uRTS
@@ -16,7 +16,7 @@ $ bash install_tool.sh [tool]
 ## Run Experiment
 Use `run.sh` script to run all experiments in our evaluation.
 ```
-$ ./run.sh [mode] [project]
+$ bash run.sh [mode] [project]
 ```
 `mode` can be `urts`, `reall`, `ekst`, and  `unsafe`;\
 `project` can be `hcommon`, `hdfs`, `hbase`, `alluxio`, and `zookeeper`.
