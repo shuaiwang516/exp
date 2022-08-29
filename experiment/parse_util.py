@@ -159,7 +159,23 @@ def parse_single_file(file):
                     exit(-1)
     #for round in rounds:
     #    round.print()
-    return default_rounds, prod1_rounds, prod2_rounds
+    return remove_duplicated(default_rounds), remove_duplicated(prod1_rounds), remove_duplicated(prod2_rounds)
+
+        
+def remove_duplicated(rounds):
+    ret = []
+    for i in range(0, len(rounds)):
+        first_commit = True
+        for j in range(0, len(rounds)):
+            # not the first commit (first commit only shows once)
+            if rounds[i] == rounds[j] and i != j:
+                first_commit = False
+                # pick the smaller total_time one, the other one is pre-collection one
+                if rounds[i] > rounds[j]:
+                    ret.append(rounds[j])
+        if first_commit:
+            ret.append(rounds[i])
+    return ret
 
 
 def print_parsed_result(source_file, mode):
@@ -169,10 +185,12 @@ def print_parsed_result(source_file, mode):
             default_rounds[i].print_urts()
             prod1_rounds[i].print_urts()
             prod2_rounds[i].print_urts()
-        elif mode == "ekst" or mode == "unsafe":
+        elif mode == "ekst":
             default_rounds[i].print_ekstazi()
             prod1_rounds[i].print_ekstazi()
             prod2_rounds[i].print_ekstazi()
+        elif mode == "unsafe":
+            default_rounds[i].print_ekstazi()
         elif mode == "reall":
             default_rounds[i].print_retestall()
             prod1_rounds[i].print_retestall()
@@ -195,15 +213,22 @@ def get_str_all_three_config(mode, commit, default_rounds, prod1_rounds, prod2_r
     for round in prod2_rounds:
         if round.get_commit() == commit:
             prod2 = round
-            
-    if default.isEmpty() or prod1.isEmpty() or prod2.isEmpty():
-        print("There is no commits equals to {}".format(commit))
-        return ""
+
+    if mode == "unsafe":
+        if default.isEmpty():
+            print("There is no commits equals to {}".format(commit))
+            return ""
+    else:
+        if default.isEmpty() or prod1.isEmpty() or prod2.isEmpty():
+            print("There is no commits equals to {}".format(commit))
+            return ""
     
     if mode == "urts":
         return "{},{},{},{}\n".format(commit, default.get_urts_data_str(), prod1.get_urts_data_str(), prod2.get_urts_data_str())
-    elif mode == "ekst" or mode == "unsafe":
+    elif mode == "ekst":
         return "{},{},{},{}\n".format(commit, default.get_ekstazi_data_str(), prod1.get_ekstazi_data_str(), prod2.get_ekstazi_data_str())
+    elif mode == "unsafe":
+        return "{},{}\n".format(commit, default.get_ekstazi_data_str())
     elif mode == "reall":
         return "{},{},{},{}\n".format(commit, default.get_retestall_data_str(), prod1.get_retestall_data_str(), prod2.get_retestall_data_str())
     else:
@@ -214,8 +239,10 @@ def get_str_all_three_config(mode, commit, default_rounds, prod1_rounds, prod2_r
 def get_csv_header(mode):
     if mode == "urts":
         return "commit,def_a_time,def_total_time,def_total_classes,def_select_from_prev,def_select_from_cur,def_select_from_both,prod1_a_time,prod1_total_time,prod1_total_classes,prod1_select_from_prev,prod1_select_from_cur,prod1_select_from_both,prod2_a_time,prod2_total_time,prod2_total_classes,prod2_select_from_prev,prod2_select_from_cur,prod2_select_from_both\n"
-    elif mode == "ekst" or mode == "unsafe":
+    elif mode == "ekst": 
         return "commit,def_a_time,def_total_time,def_total_classes,prod1_a_time,prod1_total_time,prod1_total_classes,prod2_a_time,prod2_total_time,prod2_total_classes\n"
+    elif mode == "unsafe":
+        return "commit,def_a_time,def_total_time,def_total_classes\n"
     elif mode == "reall":
         return "commit,def_total_time,def_total_classes,prod1_total_time,prod1_total_classes,prod2_total_time,prod2_total_classes\n"
 

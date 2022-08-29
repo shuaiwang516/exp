@@ -1,10 +1,20 @@
 import os, sys, shutil
 import pandas as pd
+from scipy import stats
 
 time_num_colomn_name = ["def_total_time", "def_total_classes", "prod1_total_time", "prod1_total_classes","prod2_total_time", "prod2_total_classes"]
 time_column_list = ["def_total_time","prod1_total_time","prod2_total_time"]
 classes_column_list = ["def_total_classes","prod1_total_classes", "prod2_total_classes"]
 
+
+def get_unsafe_only_default(csv_file):
+    total_df = pd.DataFrame()
+    df = pd.read_csv(csv_file)
+    total_df["unsafe_total_time"] = df["def_total_time"]
+    total_df["unsafe_total_classes"] = df["def_total_classes"]
+    #print(total_df)
+    return total_df
+    
 
 def rename_columns(df, mode):
     for col in time_num_colomn_name:
@@ -42,7 +52,8 @@ def parse_retestall(reall_file):
 def generate_final_csv(reall_csv, ekst_csv, unsafe_csv, urts_csv, target_csv):
     reall_time, reall_classes = parse_retestall(reall_csv)
     safe_df = get_total(ekst_csv, 'safe')
-    unsafe_df = get_total(unsafe_csv, 'unsafe')
+    #unsafe_df = get_total(unsafe_csv, 'unsafe')
+    unsafe_df = get_unsafe_only_default(unsafe_csv)
     urts_df = get_total(urts_csv, 'urts')
     #print(urts_df)
     #print(safe_df)
@@ -62,21 +73,26 @@ def generate_final_csv(reall_csv, ekst_csv, unsafe_csv, urts_csv, target_csv):
     result['CLASSES_safe_/_retestall'] = result['safe_total_classes'] / reall_classes
     result['CLASSES_safe_/_unsafe'] = result['safe_total_classes'] / result['unsafe_total_classes']
     result['CLASSES_unsafe_/_retestall'] = result['unsafe_total_classes'] / reall_classes
-    result.loc['Mean'] = result.mean()
+    arithmetic_mean = result.mean()
+    geo_mean_list = list(stats.gmean(result.iloc[:,1:],axis=0))
+    print(geo_mean_list)
+    geo_mean = [""]
+    geo_mean.extend(geo_mean_list)
+    print(geo_mean)
     #col_list = list(result)
     #col_list.remove("commit")
     #for col in col_list:
-        
+    result.loc['Arithmetic_Mean'] = arithmetic_mean
+    result.loc['Geo_Mean'] = geo_mean
     print(result)
     result.to_csv(target_csv)
     
 
 if __name__ == '__main__':
     proj = sys.argv[1]
-    round = sys.argv[2]
-    file_dir = sys.argv[3]
+    file_dir = sys.argv[2]
     reall_file= os.path.join(file_dir, "{}/{}-reall.csv".format(proj, proj))
-    ekst_file= os.path.join(file_dir, "{}/{}-ekst.csv".format(proj, proj))
+    ekst_file= os.path.join(file_dir, "{}/{}-ekst.csv".format(proj, proj)) 
     unsafe_file= os.path.join(file_dir, "{}/{}-unsafe.csv".format(proj, proj))
     urts_file= os.path.join(file_dir, "{}/{}-urts.csv".format(proj, proj)) 
     target_file = os.path.join(file_dir, "{}/summary.csv".format(proj))
