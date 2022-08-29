@@ -5,7 +5,7 @@ project=$2
 
 function usage() {
     echo 'Usage: ./run_azure.sh [mode] [project]'
-    echo '[mode]: (1) urts (2) retestall (3) ekstazi-ext (4) ekstazi-unsafe'
+    echo '[mode]: (1) urts (2) reall (3) ekst (4) unsafe'
     echo '[project]: (1) hcommon (2) hbase (3) hdfs (4) alluxio (5) zookeeper'
     exit 1
 }
