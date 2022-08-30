@@ -5,7 +5,7 @@
 $ bash setup_ubuntu.sh
 ```
 
-## Install uRTS
+## Install uRTS / Ekstazi
 
 Use the following command to install urts or ekstazi:
 ```
